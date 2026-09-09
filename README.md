@@ -18,6 +18,7 @@ Windows 上的 SO101 机械臂数据采集、ACT 策略训练与部署环境。�
 | `activate.cmd` / `start.cmd` | Windows 环境激活与启动 |
 | `verify.cmd` / `verify.py` | 环境自检 |
 | `使用说明.md` | 完整使用文档 |
+| `lab-log/` | 实验与踩坑台账（每次加载项目由 Agent Skill 维护） |
 
 `env/`、`cache/`、训练产物 `outputs/` 体积过大，未纳入 Git。请在本机按使用说明重建环境。
 
