@@ -2,7 +2,7 @@
 
 课表原文（抄命令）：[`docs/COURSE.md`](../docs/COURSE.md)  
 实验数字：[`experiments/INDEX.md`](../experiments/INDEX.md)  
-更新：2026-09-10 03:03
+更新：2026-09-10 03:22
 
 ## 当前焦点
 
@@ -18,14 +18,14 @@
 | W0 环境 | verify | **完成** | `logs/verification.json` | 无 |
 | W1 遥操 | 校准 + teleop | **完成** | `calibration/` COM3/COM4 | 无 |
 | W2 数据 | 100 episodes | **进行中 20/100** | `so101_pick_place_20260910_011033` | 缺 80；+30 再 +50 须等 E01 结束 |
-| W3 ACT | E01/E02/E03 各 100K | **进行中 E01 ~30K/100K** | `outputs/train/act_so101_pick_place` ckpt 020000 | E02/E03 未开始 |
+| W3 ACT | E01/E02/E03 各 100K | **进行中 E01 ~40K/100K** | `outputs/train/act_so101_pick_place` ckpt 020000、040000 | E02/E03 未开始 |
 | W4 拔 Leader | 真机 rollout + Demo | 未开始 | — | 等 E01 更好 ckpt |
 | W5–6 Eval/OOD | 填评测表 | 未开始 | 模板 `results/eval_template.md` | — |
 | W7 Flywheel | hard cases + ACT-v2 | 未开始 | — | 依赖 W6 最差条件 |
 | W8 ACT vs DP | 同数据对比 | 未开始 | 模板 `results/act_vs_dp.md` | 禁止现在并行 |
 | W9–10 SmolVLA | 语言指令 | 未开始 | — | 禁止现在并行 |
 | W11 World Model | 预测实验 | 未开始 | — | **不到该周不要做** |
-| W12 作品集 | GitHub + Demo | 未开始 | 待 `gh auth login` | — |
+| W12 作品集 | GitHub + Demo | 进行中（仓库已建） | https://github.com/wjl110/Reall2Policy | Demo 未做 |
 
 ## 按周实践记录
 
@@ -45,13 +45,14 @@
 
 - 课表：100 ep，覆盖 Left/Center/Right/Near/Far；正常光+略变光；Approach A/B/C
 - 实际：2026-09-10 录了 20 条成功抓放（约 15s×20，9000 帧），**尚未做位置/光照覆盖网格**
+- 03:19：用户清掉试录/空壳/中断目录，本地只剩 `..._011033`
 - 差距：数量 20/100；多样性未按课表铺开；分析 notebook 未建
-- 下次实践：E01 训完后 `num_episodes=30` resume 到 50，再 `=50` 到 100
+- 下次实践：E01 训完后必须 `--dataset.root=...011033` 再 `num_episodes=30` 追加到 50，再 `=50` 到 100（勿另开新目录）
 
 ### W3 ACT
 
 - 课表：E01(20) → E02(50) → E03(100)，先这一条不要并行 DP/VLA
-- 实际：E01 01:21 启动，20K 遇 P005 中断后 resume；03:03 约 **30K/100K**，loss≈0.098
+- 实际：E01 01:21 启动，20K 遇 P005 中断后 resume；03:21 **040000 存盘成功**，loss≈0.082
 - 差距：未到 100K；E02/E03 未开始
 
 ### W4–W12

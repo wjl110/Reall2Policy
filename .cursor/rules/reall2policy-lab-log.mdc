@@ -1,14 +1,14 @@
 ---
-description: 每次加载本项目必须启动实验台账 Skill，并对照 docs/COURSE.md 跟踪学习实践。
+description: 每次加载本项目必须启动实验台账 Skill，对照课表跟踪学习实践，并更新进程/收益/曲线/飞轮图。
 alwaysApply: true
 ---
 
-# 实验台账 + 课表（强制）
+# 实验台账 + 课表 + 图表（强制）
 
 本仓库是 Reall2Policy / SO-ARM101。**每一轮新对话、每次加载项目**，在做任何事之前：
 
 1. 读取并执行 `.cursor/skills/reall2policy-lab-log/SKILL.md`
-2. 先读 `lab-log/CURRENT.md`、`lab-log/INDEX.md`、`lab-log/course.md` 和 `docs/COURSE.md`
-3. 用几行中文汇报：课表周次、本周实践 vs 计划、实验状态；下一步必须来自课表
+2. 先读 `lab-log/CURRENT.md`、`lab-log/INDEX.md`、`lab-log/course.md`、`lab-log/metrics.json` 和 `docs/COURSE.md`
+3. 用几行中文汇报：课表周次、本周实践 vs 计划、实验状态、曲线与飞轮；下一步必须来自课表
 
-校准、遥操、录制、训练、评估、课表进度变化、报错时，立刻写入 `lab-log/`（含学习实践），并同步 `docs/COURSE.md` 顶部状态表。禁止只在聊天里带过。
+校准、遥操、录制、训练、评估、课表进度变化、报错、checkpoint/episodes 变化时，立刻写入 `lab-log/`（含学习实践与 `metrics.json`/`charts.md` 四张图），并同步 `docs/COURSE.md` 顶部状态表。禁止只在聊天里带过。

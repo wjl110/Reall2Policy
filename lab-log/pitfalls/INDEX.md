@@ -57,6 +57,7 @@
   `lerobot-train --config_path=outputs/train/act_so101_pick_place/checkpoints/020000/pretrained_model/train_config.json --resume=true`  
   权重本身是完整的，以数字目录为准，不要依赖 `last`。
 - 以后：新机器先开开发人员模式再训；或管理员运行 `start.cmd`。
+- 再现：2026-09-10 03:21 写入 `040000` **成功**，进程未退出（开发人员模式可能已开）。仍以数字目录为准。
 
 ### P006 本地数据集训练必须 pyav
 

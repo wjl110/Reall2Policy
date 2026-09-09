@@ -12,4 +12,4 @@ data/local/so101_pick_place_20260910_011033
 - 任务: Pick up the object and place it down.
 - 相机: front 640×480 @ 30
 
-空壳 / 中断目录不要拿去训练。清单见 `lab-log/INDEX.md`。
+2026-09-10 已清理试录、空壳、中断目录。补采时必须带 `--dataset.root` 指向上述目录，不要另开新文件夹。

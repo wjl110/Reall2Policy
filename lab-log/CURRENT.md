@@ -1,17 +1,18 @@
 # 当前状态
 
-更新：2026-09-10 03:03
+更新：2026-09-10 03:22
 
 ## 课表
 
-**W3 E01 进行中 + W2 数据 20/100。** 详见 [course.md](course.md)。  
+**W3 E01 进行中 + W2 数据 20/100。** 详见 [course.md](course.md)。图表：[charts.md](charts.md)。  
 本周该做：让 ACT 接着跑。本周不要：补采同一数据集、开 Diffusion/SmolVLA、做 W11。
 
 ## 正在跑
 
-ACT 训练 **resume 中**（终端 `cmd /k activate.cmd`）。
+ACT 训练 **resume 中**（终端 `activate.cmd`）。
 
-- 约 **step 30K** / 100K，loss≈0.098，~9.6 step/s，显存 2.10 GB
+- 约 **step 40K** / 100K，loss≈0.082，l1≈0.078，~9.7 step/s，显存 2.10 GB
+- 已写入 **`checkpoints/040000`**（存盘成功）
 - 输出：`outputs/train/act_so101_pick_place`
 - **不要停，不要往这份数据里 resume 录制**
 
@@ -21,14 +22,15 @@ ACT 训练 **resume 中**（终端 `cmd /k activate.cmd`）。
 |----|-----|
 | 数据集 | `data/local/so101_pick_place_20260910_011033` |
 | 规模 | 20 episodes / 9000 frames（课表目标 100） |
-| 权重 | `outputs/train/act_so101_pick_place/checkpoints/020000` |
-| 课表 | `docs/COURSE.md` |
+| 权重 | `checkpoints/020000`、`040000` |
+| 课表完成度 | 约 23% |
+| 飞轮 | 卡在加采（训练占用同一 root） |
 
 ## 阻塞 / 未完成
 
-- E01 未到 100K；存盘仍依赖「开发人员模式」（P005）。
+- E01 未到 100K。
 - Week 2：20/100，且未做位置/光照网格。
-- GitHub `Reall2Policy` 待 `gh auth login`。
+- GitHub 杂数据删除随本版推送。
 - 实机 rollout 未做。
 
 ## 下一步（按课表）

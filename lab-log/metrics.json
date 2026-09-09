@@ -1,0 +1,41 @@
+{
+  "updated": "2026-09-10T03:22:00+08:00",
+  "source": "lab-log + docs/COURSE.md + terminals/6.txt",
+  "course_overall_pct": 23,
+  "weeks": [
+    {"id": "W0", "name": "环境", "progress_pct": 100, "benefit_plan": 2, "benefit_realized": 2},
+    {"id": "W1", "name": "遥操", "progress_pct": 100, "benefit_plan": 4, "benefit_realized": 4},
+    {"id": "W2", "name": "数据", "progress_pct": 20, "benefit_plan": 6, "benefit_realized": 3},
+    {"id": "W3", "name": "ACT", "progress_pct": 40, "benefit_plan": 7, "benefit_realized": 4},
+    {"id": "W4", "name": "拔Leader", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
+    {"id": "W5-6", "name": "Eval/OOD", "progress_pct": 0, "benefit_plan": 8, "benefit_realized": 0},
+    {"id": "W7", "name": "Flywheel", "progress_pct": 0, "benefit_plan": 8, "benefit_realized": 0},
+    {"id": "W8", "name": "ACT vs DP", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
+    {"id": "W9-10", "name": "SmolVLA", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
+    {"id": "W11", "name": "World Model", "progress_pct": 0, "benefit_plan": 6, "benefit_realized": 0},
+    {"id": "W12", "name": "作品集", "progress_pct": 15, "benefit_plan": 10, "benefit_realized": 2}
+  ],
+  "learning_curve": {
+    "job": "act_so101_pick_place",
+    "policy": "act",
+    "caption": "E01 resume 后；20K 前 loss 约 7.0→0.13 未画入以免压扁纵轴。Source: ot_train.py 终端日志。",
+    "steps_k": [20, 22, 24, 30, 33, 35, 37, 39, 40],
+    "loss": [0.127, 0.121, 0.111, 0.098, 0.092, 0.088, 0.085, 0.083, 0.082],
+    "l1_loss": [0.111, 0.107, 0.101, 0.090, 0.086, 0.084, 0.081, 0.080, 0.078]
+  },
+  "flywheel": {
+    "round": 1,
+    "episodes_now": 20,
+    "episodes_target": 100,
+    "hard_cases": 0,
+    "eval_trials": 0,
+    "blocked_by": "E01 训练占用同一数据集，禁止 resume 录制",
+    "nodes": [
+      {"id": "collect", "label": "采集", "status": "done"},
+      {"id": "train", "label": "训练 E01", "status": "in_progress"},
+      {"id": "eval", "label": "真机评估", "status": "pending"},
+      {"id": "fail", "label": "失败归类", "status": "pending"},
+      {"id": "recapture", "label": "加采 hard", "status": "blocked"}
+    ]
+  }
+}

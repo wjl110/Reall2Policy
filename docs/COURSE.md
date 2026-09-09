@@ -8,7 +8,7 @@
 | W0 环境 | 完成 | `env/` + `verify.cmd` |
 | W1 遥操 | 完成 | 校准 + teleop |
 | W2 数据 | **进行中 20/100** | `so101_pick_place_20260910_011033` |
-| W3 ACT | **进行中 ~30K/100K** | `outputs/train/act_so101_pick_place` |
+| W3 ACT | **进行中 ~40K/100K** | `outputs/train/act_so101_pick_place` |
 | W4–W12 | 未开始 | — |
 
 任务只做一件：`Pick up the object and place it down.`（Random-position Pick & Place）

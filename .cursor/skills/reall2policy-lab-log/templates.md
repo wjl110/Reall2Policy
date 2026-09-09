@@ -73,6 +73,10 @@
 - 以后：
 ```
 
+## 图表 `lab-log/metrics.json` + `charts.md`
+
+先改 json 再改 mermaid。四张图：学习进程、项目收益、学习曲线、数据回收。见 Skill 内 `charts-spec.md`。
+
 ## 课表实践 `lab-log/course.md`
 
 按周更新「计划 / 实际 / 差距」。每次启动改「当前焦点」；每次练完改对应周。
