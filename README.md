@@ -1,4 +1,4 @@
-# Real2Policy
+# Reall2Policy
 
 End-to-end real-world robot learning on LeRobot SO-101.
 
