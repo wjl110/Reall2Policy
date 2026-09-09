@@ -1,0 +1,11 @@
+# Week 8。同一 dataset，控制变量。
+policy: diffusion
+ema: true
+device: cuda
+batch_size: 8
+steps: 100000
+video_backend: pyav
+push_to_hub: false
+wandb: false
+dataset_root: D:\SO-ARM101\data\local\so101_pick_place_20260910_011033
+eval_weights: pretrained_model_ema

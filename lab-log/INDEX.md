@@ -1,10 +1,11 @@
 # 实验台账总览
 
-最后更新：2026-09-10 02:50
+最后更新：2026-09-10 03:03
 
 | 区 | 文件 |
 |----|------|
 | 当前状态 | [CURRENT.md](CURRENT.md) |
+| 课表实践 | [course.md](course.md)（对照 [`docs/COURSE.md`](../docs/COURSE.md)） |
 | 硬件节点 | [nodes/hardware.md](nodes/hardware.md) |
 | 踩坑 | [pitfalls/INDEX.md](pitfalls/INDEX.md) |
 | 会话 | [sessions/](sessions/) |
@@ -17,8 +18,9 @@
 | 2026-09-10 | 校准 + 遥操打通 | 成功 | `calibration/` Leader COM3 / Follower COM4 | [experiments/2026-09-10_calibrate-teleop.md](experiments/2026-09-10_calibrate-teleop.md) |
 | 2026-09-10 | 首次录制试跑 | 部分成功 | `so101_first_test_*`（正式用 `..._003232`） | [experiments/2026-09-10_first-record.md](experiments/2026-09-10_first-record.md) |
 | 2026-09-10 | 抓放 20 集采集 | 成功 | `so101_pick_place_20260910_011033` 20ep / 9000f | [experiments/2026-09-10_pick-place-20.md](experiments/2026-09-10_pick-place-20.md) |
-| 2026-09-10 | ACT 训练 100K | 进行中 | ckpt `020000`，resume 中约 22K | [experiments/2026-09-10_act-train.md](experiments/2026-09-10_act-train.md) |
+| 2026-09-10 | ACT 训练 100K | 进行中 | ckpt `020000`，resume 中约 30K | [experiments/2026-09-10_act-train.md](experiments/2026-09-10_act-train.md) |
 | 2026-09-10 | 建立实验台账 Skill | 成功 | `lab-log/` + `.cursor/skills/reall2policy-lab-log` | [experiments/2026-09-10_lab-log-skill.md](experiments/2026-09-10_lab-log-skill.md) |
+| 2026-09-10 | 12 周课表落地 | 成功 | `docs/COURSE.md` + configs/experiments/results | [experiments/2026-09-10_course-setup.md](experiments/2026-09-10_course-setup.md) |
 
 ## 数据集一览（`data/local/`）
 

@@ -1,0 +1,13 @@
+# ACT 本机默认。实际以 CLI 为准，见 docs/COURSE.md
+policy: act
+device: cuda
+batch_size: 8
+steps: 100000
+video_backend: pyav
+push_to_hub: false
+wandb: false
+robot_port: COM4
+teleop_port: COM3
+camera: {front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}
+dataset_root: D:\SO-ARM101\data\local\so101_pick_place_20260910_011033
+task: "Pick up the object and place it down."

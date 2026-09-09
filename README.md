@@ -1,27 +1,50 @@
-# Reall2Policy
+# Real2Policy
 
-Windows 上的 SO101 机械臂数据采集、ACT 策略训练与部署环境。基于 Seeed 验证版 [LeRobot](https://github.com/Seeed-Projects/lerobot)。
+End-to-end real-world robot learning on LeRobot SO-101.
 
-## 快速开始
+`20 demonstrations (target 100) · ACT (training) · Diffusion Policy · SmolVLA · OOD Generalization`
 
-1. 克隆本仓库后，按 [使用说明.md](使用说明.md) 准备 Python / CUDA 环境。
-2. 双击 `start.cmd` 打开已激活的命令窗口。
-3. 运行 `verify.cmd` 检查安装。
+> 数字以 `experiments/INDEX.md` 与 `results/` 为准，未测完不写成功率。
 
-## 仓库内容
+## Demo
 
-| 路径 | 说明 |
+（Week 4 后放 `assets/demo.mp4`）
+
+## 当前进度
+
+课表与全部可复制命令：**[docs/COURSE.md](docs/COURSE.md)**
+
+| 周 | 状态 |
 |---|---|
-| `lerobot/` | LeRobot 源码（editable 安装） |
-| `calibration/` | SO101 leader / follower 校准数据 |
-| `data/` | 本地采集的演示数据集 |
-| `activate.cmd` / `start.cmd` | Windows 环境激活与启动 |
-| `verify.cmd` / `verify.py` | 环境自检 |
-| `使用说明.md` | 完整使用文档 |
-| `lab-log/` | 实验与踩坑台账（每次加载项目由 Agent Skill 维护） |
+| W0 环境 / W1 遥操 | 完成 |
+| W2 Dataset | 20/100 episodes |
+| W3 ACT | 进行中 |
+| W4–W12 | 未开始 |
 
-`env/`、`cache/`、训练产物 `outputs/` 体积过大，未纳入 Git。请在本机按使用说明重建环境。
+Architecture → Results → Benchmark → Failure Analysis → Reproduction：随周次补齐。
+
+## 本机启动
+
+1. 双击 `start.cmd`
+2. `verify.cmd`
+3. 按 [docs/COURSE.md](docs/COURSE.md) 执行当周命令
+
+Windows 环境细节见 [使用说明.md](使用说明.md)。实验台账：`lab-log/`。
+
+## 仓库
+
+```
+configs/     act / diffusion / smolvla
+data/        本地 demonstration（不上 Hub）
+docs/        课表与方法
+experiments/ E01–E08
+results/     eval / ACT vs DP
+assets/      Demo
+scripts/     评测与部署（W4 起）
+```
+
+`env/`、`cache/`、`outputs/` 不进 Git。
 
 ## 许可证
 
-`lerobot/` 目录遵循 Apache 2.0。其余项目文件同样按 Apache 2.0 使用。
+`lerobot/` 为 Apache 2.0。其余项目文件同样 Apache 2.0。

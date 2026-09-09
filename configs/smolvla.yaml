@@ -1,0 +1,13 @@
+# Week 9–10。batch 先 4，OOM 再降。
+policy: smolvla
+device: cuda
+batch_size: 4
+steps: 20000
+video_backend: pyav
+push_to_hub: false
+wandb: false
+dataset_root: D:\SO-ARM101\data\local\so101_pick_place_20260910_011033
+tasks:
+  - "Pick up the red block."
+  - "Put the block into the box."
+  - "Move the blue object to the left."

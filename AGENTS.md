@@ -6,4 +6,4 @@
 
 `.cursor/skills/reall2policy-lab-log/SKILL.md`
 
-记录位置：`lab-log/`。要记下做了什么、实验数据、效果、重要日志、节点信息。细则以该 Skill 为准。
+记录位置：`lab-log/`。要记下做了什么、实验数据、效果、重要日志、节点信息，以及对照 `docs/COURSE.md` 的学习实践（进度在 `lab-log/course.md`）。细则以该 Skill 为准。下一步命令优先从课表复制，禁止无故跳周。
