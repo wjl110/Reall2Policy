@@ -1,0 +1,14 @@
+---
+description: 每次加载本项目必须启动实验台账 Skill，并持续记录实验、数据、效果、日志与节点。
+alwaysApply: true
+---
+
+# 实验台账（强制）
+
+本仓库是 Reall2Policy / SO-ARM101。**每一轮新对话、每次加载项目**，在做任何事之前：
+
+1. 读取并执行 `.cursor/skills/reall2policy-lab-log/SKILL.md`
+2. 先读 `lab-log/CURRENT.md` 与 `lab-log/INDEX.md`，写会话快照
+3. 用几行中文汇报当前实验状态，再处理用户请求
+
+校准、遥操、录制、回放、训练、评估、报错、踩坑发生时，立刻写入 `lab-log/`（做了什么、实验数据、效果、重要日志、节点），禁止只在聊天里带过。

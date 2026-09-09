@@ -41,6 +41,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+.cursor/**/*.log
 
 # Experiment trackers
 wandb/
