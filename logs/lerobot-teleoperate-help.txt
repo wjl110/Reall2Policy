@@ -1,0 +1,47 @@
+usage: lerobot-teleoperate [-h] [--config_path str] [--teleop str]
+                           [--teleop.type {openarm_leader,bi_openarm_leader,openarm_mini,bi_openarm_mini,rebot_102_leader,bi_rebot_102_leader,so100_leader,so101_leader,bi_so_leader,gamepad,homunculus_glove,homunculus_arm,keyboard,keyboard_ee,keyboard_rover,koch_leader,omx_leader,reachy2_teleoperator,unitree_g1}]
+                           [--robot str]
+                           [--robot.type {openarm_follower,bi_openarm_follower,rebot_b601_follower,bi_rebot_b601_follower,so100_follower,so101_follower,bi_so_follower,earthrover_mini_plus,hope_jr_hand,hope_jr_arm,koch_follower,omx_follower,reachy2,unitree_g1}]
+                           [--fps int] [--teleop_time_s [float]]
+                           [--display_data bool] [--display_mode str]
+                           [--display_ip [str]] [--display_port [int]]
+                           [--display_compressed_images bool]
+
+options:
+  -h, --help            show this help message and exit
+  --config_path str     Path for a config file to parse with draccus (default:
+                        None)
+  --teleop str          Config file for teleop (default: None)
+  --robot str           Config file for robot (default: None)
+
+TeleoperateConfig:
+
+  --fps int             Limit the maximum frames per second. (default: 60)
+  --teleop_time_s [float]
+  --display_data bool   Display all cameras on screen (default: False)
+  --display_mode str    Visualization backend used when display_data is True:
+                        "rerun" or "foxglove". (default: rerun)
+  --display_ip [str]    For "rerun": IP of a remote server to send to. For
+                        "foxglove": interface to bind the WebSocket server to
+                        (127.0.0.1 for local only, 0.0.0.0 for all
+                        interfaces). (default: None)
+  --display_port [int]  For "rerun": port of the remote server. For
+                        "foxglove": port to bind the WebSocket server to.
+                        (default: None)
+  --display_compressed_images bool
+                        Whether to display compressed (JPEG) images instead of
+                        raw frames (default: False)
+
+TeleoperatorConfig ['teleop']:
+  
+  TODO: pepijn, steven: if more robots require multiple teleoperators (like lekiwi) its good to make this possibele in teleop.py and record.py with List[Teleoperator]
+
+  --teleop.type {openarm_leader,bi_openarm_leader,openarm_mini,bi_openarm_mini,rebot_102_leader,bi_rebot_102_leader,so100_leader,so101_leader,bi_so_leader,gamepad,homunculus_glove,homunculus_arm,keyboard,keyboard_ee,keyboard_rover,koch_leader,omx_leader,reachy2_teleoperator,unitree_g1}
+                        Which type of TeleoperatorConfig ['teleop'] to use
+                        (default: None)
+
+RobotConfig ['robot']:
+
+  --robot.type {openarm_follower,bi_openarm_follower,rebot_b601_follower,bi_rebot_b601_follower,so100_follower,so101_follower,bi_so_follower,earthrover_mini_plus,hope_jr_hand,hope_jr_arm,koch_follower,omx_follower,reachy2,unitree_g1}
+                        Which type of RobotConfig ['robot'] to use (default:
+                        None)

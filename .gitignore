@@ -1,0 +1,47 @@
+# Python / Conda environments (multi-GB, do not upload)
+env/
+.venv/
+venv/
+
+# Package, Hugging Face, CUDA, and temp caches
+cache/
+
+# Trained weights exceed GitHub's 100MB file limit
+outputs/
+
+# Spec-workflow leftovers (env snapshots copied to logs/)
+1/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Logs that are regenerated locally
+logs/*.mp4
+logs/*.log
+*.log
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+hf_token
+token
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Experiment trackers
+wandb/
+runs/

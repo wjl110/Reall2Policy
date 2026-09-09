@@ -1,0 +1,225 @@
+usage: lerobot-record [-h] [--config_path str] [--robot str]
+                      [--robot.type {openarm_follower,bi_openarm_follower,rebot_b601_follower,bi_rebot_b601_follower,so100_follower,so101_follower,bi_so_follower,earthrover_mini_plus,hope_jr_hand,hope_jr_arm,koch_follower,omx_follower,reachy2,unitree_g1}]
+                      [--dataset str] [--dataset.repo_id str]
+                      [--dataset.single_task str] [--dataset.root [str|Path]]
+                      [--dataset.fps int] [--dataset.episode_time_s int|float]
+                      [--dataset.reset_time_s int|float]
+                      [--dataset.num_episodes int] [--dataset.video bool]
+                      [--dataset.push_to_hub bool] [--dataset.private [bool]]
+                      [--dataset.tags [list[str]]]
+                      [--dataset.num_image_writer_processes int]
+                      [--dataset.num_image_writer_threads_per_camera int]
+                      [--dataset.video_encoding_batch_size int]
+                      [--rgb_encoder str] [--dataset.rgb_encoder.vcodec str]
+                      [--dataset.rgb_encoder.pix_fmt str]
+                      [--dataset.rgb_encoder.g [int]]
+                      [--dataset.rgb_encoder.crf [int|float]]
+                      [--dataset.rgb_encoder.preset [int|str]]
+                      [--dataset.rgb_encoder.fast_decode int]
+                      [--dataset.rgb_encoder.video_backend str]
+                      [--dataset.rgb_encoder.extra_options dict[str,Any]]
+                      [--depth_encoder str]
+                      [--dataset.depth_encoder.vcodec str]
+                      [--dataset.depth_encoder.pix_fmt str]
+                      [--dataset.depth_encoder.g [int]]
+                      [--dataset.depth_encoder.crf [int|float]]
+                      [--dataset.depth_encoder.preset [int|str]]
+                      [--dataset.depth_encoder.fast_decode int]
+                      [--dataset.depth_encoder.video_backend str]
+                      [--dataset.depth_encoder.extra_options dict[str,Any]]
+                      [--dataset.depth_encoder.depth_min float]
+                      [--dataset.depth_encoder.depth_max float]
+                      [--dataset.depth_encoder.shift float]
+                      [--dataset.depth_encoder.use_log bool]
+                      [--dataset.streaming_encoding bool]
+                      [--dataset.encoder_queue_maxsize int]
+                      [--dataset.encoder_threads [int]]
+                      [--dataset.no_stamp bool] [--teleop str]
+                      [--teleop.type {openarm_leader,bi_openarm_leader,openarm_mini,bi_openarm_mini,rebot_102_leader,bi_rebot_102_leader,so100_leader,so101_leader,bi_so_leader,homunculus_glove,homunculus_arm,koch_leader,omx_leader,reachy2_teleoperator,unitree_g1,keyboard,keyboard_ee,keyboard_rover}]
+                      [--display_data bool] [--display_mode str]
+                      [--display_ip [str]] [--display_port [int]]
+                      [--display_compressed_images bool] [--play_sounds bool]
+                      [--resume bool]
+
+options:
+  -h, --help            show this help message and exit
+  --config_path str     Path for a config file to parse with draccus (default:
+                        None)
+  --robot str           Config file for robot (default: None)
+  --dataset str         Config file for dataset (default: None)
+  --rgb_encoder str     Config file for rgb_encoder (default: None)
+  --depth_encoder str   Config file for depth_encoder (default: None)
+  --teleop str          Config file for teleop (default: None)
+
+RecordConfig:
+
+  --display_data bool   Display all cameras on screen (default: False)
+  --display_mode str    Visualization backend used when display_data is True:
+                        "rerun" or "foxglove". (default: rerun)
+  --display_ip [str]    For "rerun": IP of a remote server to send to. For
+                        "foxglove": interface to bind the WebSocket server to
+                        (127.0.0.1 for local only, 0.0.0.0 for all
+                        interfaces). (default: None)
+  --display_port [int]  For "rerun": port of the remote server. For
+                        "foxglove": port to bind the WebSocket server to.
+                        (default: None)
+  --display_compressed_images bool
+                        Whether to display compressed (JPEG) images instead of
+                        raw frames (default: False)
+  --play_sounds bool    Use vocal synthesis to read events. (default: True)
+  --resume bool         Resume recording on an existing dataset. (default:
+                        False)
+
+RobotConfig ['robot']:
+
+  --robot.type {openarm_follower,bi_openarm_follower,rebot_b601_follower,bi_rebot_b601_follower,so100_follower,so101_follower,bi_so_follower,earthrover_mini_plus,hope_jr_hand,hope_jr_arm,koch_follower,omx_follower,reachy2,unitree_g1}
+                        Which type of RobotConfig ['robot'] to use (default:
+                        None)
+
+DatasetRecordConfig ['dataset']:
+
+  --dataset.repo_id str
+                        Dataset identifier. By convention it should match
+                        '{hf_username}/{dataset_name}' (e.g. `lerobot/test`).
+                        (default: )
+  --dataset.single_task str
+                        A short but accurate description of the task performed
+                        during the recording (e.g. "Pick the Lego block and
+                        drop it in the box on the right.") (default: )
+  --dataset.root [str|Path]
+                        Root directory where the dataset will be stored (e.g.
+                        'dataset/path'). If None, defaults to
+                        $HF_LEROBOT_HOME/repo_id. (default: None)
+  --dataset.fps int     Limit the frames per second. (default: 30)
+  --dataset.episode_time_s int|float
+                        Number of seconds for data recording for each episode.
+                        (default: 60)
+  --dataset.reset_time_s int|float
+                        Number of seconds for resetting the environment after
+                        each episode. (default: 60)
+  --dataset.num_episodes int
+                        Number of episodes to record. (default: 50)
+  --dataset.video bool  Encode frames in the dataset into video (default:
+                        True)
+  --dataset.push_to_hub bool
+                        Upload dataset to Hugging Face hub. (default: True)
+  --dataset.private [bool]
+                        If True, upload as private; if None, defer to the org
+                        default on the Hub (only affects orgs). (default:
+                        None)
+  --dataset.tags [list[str]]
+                        Add tags to your dataset on the hub. (default: None)
+  --dataset.num_image_writer_processes int
+                        Number of subprocesses handling the saving of frames
+                        as PNG. Set to 0 to use threads only; set to ��1 to use
+                        subprocesses, each using threads to write images. The
+                        best number of processes and threads depends on your
+                        system. We recommend 4 threads per camera with 0
+                        processes. If fps is unstable, adjust the thread
+                        count. If still unstable, try using 1 or more
+                        subprocesses. (default: 0)
+  --dataset.num_image_writer_threads_per_camera int
+                        Number of threads writing the frames as png images on
+                        disk, per camera. Too many threads might cause
+                        unstable teleoperation fps due to main thread being
+                        blocked. Not enough threads might cause low camera
+                        fps. (default: 4)
+  --dataset.video_encoding_batch_size int
+                        Number of episodes to record before batch encoding
+                        videos Set to 1 for immediate encoding (default
+                        behavior), or higher for batched encoding (default: 1)
+  --dataset.streaming_encoding bool
+                        Enable streaming video encoding: encode frames in
+                        real-time during capture instead of writing PNG images
+                        first. Makes save_episode() near-instant. More info in
+                        the documentation: https://huggingface.co/docs/lerobot
+                        /streaming_video_encoding (default: False)
+  --dataset.encoder_queue_maxsize int
+                        Maximum number of frames to buffer per camera when
+                        using streaming encoding. ~1s buffer at 30fps.
+                        Provides backpressure if the encoder can't keep up.
+                        (default: 30)
+  --dataset.encoder_threads [int]
+                        Number of threads per encoder instance. None = auto
+                        (codec default). Lower values reduce CPU usage, maps
+                        to 'lp' (via svtav1-params) for libsvtav1 and
+                        'threads' for h264/hevc.. (default: None)
+  --dataset.no_stamp bool
+                        Skip appending the date-time tag to repo_id, keeping
+                        the user-provided name as-is (e.g. self-managed
+                        versioned names intended for a later `lerobot-edit-
+                        dataset merge`). (default: False)
+
+RGBEncoderConfig ['dataset.rgb_encoder']:
+  Video encoder settings for camera MP4s (codec, quality, GOP, etc.). Tuned via CLI nested keys,
+  e.g. ``--dataset.rgb_encoder.vcodec=h264`` (see ``RGBEncoderConfig``).
+
+  --dataset.rgb_encoder.vcodec str
+                        Video codec name. "auto" picks a hardware codec if
+                        available, else libsvtav1. (default: libsvtav1)
+  --dataset.rgb_encoder.pix_fmt str
+                        Pixel format (e.g. yuv420p). (default: yuv420p)
+  --dataset.rgb_encoder.g [int]
+                        GOP size (keyframe interval). (default: 2)
+  --dataset.rgb_encoder.crf [int|float]
+                        Quality level. Lower means better quality and larger
+                        files. (default: 30)
+  --dataset.rgb_encoder.preset [int|str]
+                        Speed/quality preset. Accepted values are codec-
+                        specific. (default: None)
+  --dataset.rgb_encoder.fast_decode int
+                        Fast-decode tuning. Accepted values are codec-
+                        specific, 0 disables it. (default: 0)
+  --dataset.rgb_encoder.video_backend str
+                        Encoding backend. Only "pyav" is currently supported.
+                        (default: pyav)
+  --dataset.rgb_encoder.extra_options dict[str,Any]
+                        Extra codec options merged last, e.g. {"tune":
+                        "film"}. (default: {})
+
+DepthEncoderConfig ['dataset.depth_encoder']:
+  Video encoder settings for depth-map MP4s (codec, quality, GOP, etc.). Tuned via CLI nested keys.
+
+  --dataset.depth_encoder.vcodec str
+                        Video codec name. Defaults to HEVC Main 12 (a 12-bit-
+                        capable codec). (default: hevc)
+  --dataset.depth_encoder.pix_fmt str
+                        Pixel format. Defaults to 12-bit grayscale. (default:
+                        gray12le)
+  --dataset.depth_encoder.g [int]
+                        GOP size (keyframe interval). (default: 2)
+  --dataset.depth_encoder.crf [int|float]
+                        Quality level. Lower means better quality and larger
+                        files. (default: 30)
+  --dataset.depth_encoder.preset [int|str]
+                        Speed/quality preset. Accepted values are codec-
+                        specific. (default: None)
+  --dataset.depth_encoder.fast_decode int
+                        Fast-decode tuning. Accepted values are codec-
+                        specific, 0 disables it. (default: 0)
+  --dataset.depth_encoder.video_backend str
+                        Encoding backend. Only "pyav" is currently supported.
+                        (default: pyav)
+  --dataset.depth_encoder.extra_options dict[str,Any]
+  --dataset.depth_encoder.depth_min float
+                        Minimum depth in meters, mapped to the lowest quantum.
+                        (default: 0.01)
+  --dataset.depth_encoder.depth_max float
+                        Maximum depth in meters, mapped to the highest
+                        quantum. (default: 10.0)
+  --dataset.depth_encoder.shift float
+                        Pre-log offset in meters for numerical stability near
+                        zero. (default: 3.5)
+  --dataset.depth_encoder.use_log bool
+                        Use logarithmic quantization (True) or linear (False).
+                        (default: True)
+
+Optional ['teleop']:
+  Teleoperator to control the robot (required)
+
+TeleoperatorConfig ['teleop']:
+  Teleoperator to control the robot (required)
+
+  --teleop.type {openarm_leader,bi_openarm_leader,openarm_mini,bi_openarm_mini,rebot_102_leader,bi_rebot_102_leader,so100_leader,so101_leader,bi_so_leader,homunculus_glove,homunculus_arm,koch_leader,omx_leader,reachy2_teleoperator,unitree_g1,keyboard,keyboard_ee,keyboard_rover}
+                        Which type of TeleoperatorConfig ['teleop'] to use
+                        (default: None)
