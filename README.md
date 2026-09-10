@@ -8,7 +8,7 @@ End-to-end real-world robot learning on LeRobot SO-101.
 
 ## Demo
 
-（Week 4 后放 `assets/demo.mp4`）
+![SO-101 pick and place](assets/demo.gif)
 
 ## 当前进度
 
