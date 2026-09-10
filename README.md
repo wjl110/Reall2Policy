@@ -8,7 +8,12 @@ End-to-end real-world robot learning on LeRobot SO-101.
 
 ## Demo
 
-![SO-101 pick and place](assets/demo.gif)
+<table>
+  <tr>
+    <td align="center"><img src="assets/demo.gif" width="360" alt="SO-101 pick and place" /></td>
+    <td align="center"><img src="assets/demo_0.gif" width="360" alt="SO-101 showcase" /></td>
+  </tr>
+</table>
 
 ## 当前进度
 
