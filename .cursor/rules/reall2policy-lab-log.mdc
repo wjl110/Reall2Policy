@@ -11,4 +11,4 @@ alwaysApply: true
 2. 先读 `lab-log/CURRENT.md`、`lab-log/INDEX.md`、`lab-log/course.md`、`lab-log/metrics.json` 和 `docs/COURSE.md`
 3. 用几行中文汇报：课表周次、本周实践 vs 计划、实验状态、曲线与飞轮；下一步必须来自课表
 
-校准、遥操、录制、训练、评估、课表进度变化、报错、checkpoint/episodes 变化时，立刻写入 `lab-log/`（含学习实践与 `metrics.json`/`charts.md` 四张图），并同步 `docs/COURSE.md` 顶部状态表。禁止只在聊天里带过。
+校准、遥操、录制、训练、评估、课表进度变化、报错、checkpoint/episodes 变化时，立刻写入 `lab-log/`（含学习实践与 `metrics.json`/`charts.md` 四张图），并同步 `docs/COURSE.md` 顶部状态表。里程碑或应对外展示的进度变化时，更新 `metrics.json` 的 `readme` 并运行 `scripts/sync-readme.py`。禁止只在聊天里带过。

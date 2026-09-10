@@ -1,20 +1,35 @@
 {
-  "updated": "2026-09-10T23:17:00+08:00",
-  "source": "lab-log + docs/COURSE.md + terminals/11.txt + meta/info.json",
-  "course_overall_pct": 31,
+  "updated": "2026-09-11T01:13:00+08:00",
+  "source": "lab-log + docs/COURSE.md + terminals/11.txt + info.json + checkpoints",
+  "course_overall_pct": 33,
   "weeks": [
     {"id": "W0", "name": "环境", "progress_pct": 100, "benefit_plan": 2, "benefit_realized": 2},
     {"id": "W1", "name": "遥操", "progress_pct": 100, "benefit_plan": 4, "benefit_realized": 4},
     {"id": "W2", "name": "数据", "progress_pct": 50, "benefit_plan": 6, "benefit_realized": 4},
-    {"id": "W3", "name": "ACT", "progress_pct": 33, "benefit_plan": 7, "benefit_realized": 6},
-    {"id": "W4", "name": "拔Leader", "progress_pct": 40, "benefit_plan": 9, "benefit_realized": 5},
+    {"id": "W3", "name": "ACT", "progress_pct": 53, "benefit_plan": 7, "benefit_realized": 6},
+    {"id": "W4", "name": "拔Leader", "progress_pct": 45, "benefit_plan": 9, "benefit_realized": 6},
     {"id": "W5-6", "name": "Eval/OOD", "progress_pct": 0, "benefit_plan": 8, "benefit_realized": 0},
     {"id": "W7", "name": "Flywheel", "progress_pct": 0, "benefit_plan": 8, "benefit_realized": 0},
     {"id": "W8", "name": "ACT vs DP", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
     {"id": "W9-10", "name": "SmolVLA", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
     {"id": "W11", "name": "World Model", "progress_pct": 0, "benefit_plan": 6, "benefit_realized": 0},
-    {"id": "W12", "name": "作品集", "progress_pct": 15, "benefit_plan": 10, "benefit_realized": 2}
+    {"id": "W12", "name": "作品集", "progress_pct": 25, "benefit_plan": 10, "benefit_realized": 4}
   ],
+  "readme": {
+    "demonstrations": 50,
+    "demonstrations_target": 100,
+    "headline_policy": "ACT E02",
+    "headline_step": "~58K/100K",
+    "last_milestone": "2026-09-11 README 同步机制落地；E02 ckpt 40K",
+    "footnote": "进度由 `lab-log/metrics.json` 生成；实验数字以 `experiments/INDEX.md` 与 `results/` 为准，未测完不写成功率。",
+    "week_rows": [
+      {"label": "W0 环境 / W1 遥操", "status": "完成"},
+      {"label": "W2 Dataset", "status": "50/100 episodes"},
+      {"label": "W3 ACT", "status": "E01 完成；E02 ~58K/100K（ckpt 20K/40K）"},
+      {"label": "W4 拔 Leader", "status": "rollout OK；Demo GIF 已上"},
+      {"label": "W5–W12", "status": "未开始"}
+    ]
+  },
   "learning_curve": {
     "job": "act_so101_pick_place",
     "policy": "act",
@@ -23,19 +38,28 @@
     "loss": [0.127, 0.121, 0.111, 0.098, 0.092, 0.088, 0.085, 0.083, 0.082, 0.051],
     "l1_loss": [0.111, 0.107, 0.101, 0.090, 0.086, 0.084, 0.081, 0.080, 0.078, 0.051]
   },
+  "learning_curve_e02": {
+    "job": "act_so101_e02",
+    "policy": "act",
+    "caption": "E02 重训；20K/40K ckpt 已落盘。Source: ot_train.py 23:28 起重训。",
+    "steps_k": [0.2, 0.6, 1, 2, 3.4, 3.8, 20, 40, 50, 58],
+    "loss": [7.076, 2.725, 2.194, 1.431, 0.813, 0.693, 0.206, 0.120, 0.096, 0.086],
+    "l1_loss": [0.682, 0.577, 0.533, 0.452, 0.366, 0.342, 0.174, 0.114, 0.094, 0.084],
+    "kld_loss": [0.639, 0.215, 0.166, 0.098, 0.045, 0.035, 0.003, 0.001, 0.000, 0.000]
+  },
   "flywheel": {
-    "round": 1,
+    "round": 2,
     "episodes_now": 50,
     "episodes_target": 100,
     "hard_cases": 0,
     "eval_trials": 2,
-    "blocked_by": "",
+    "blocked_by": "E02 训练读同一数据集",
     "nodes": [
-      {"id": "collect", "label": "采集", "status": "done"},
-      {"id": "train", "label": "训练 E01", "status": "done"},
-      {"id": "eval", "label": "真机评估", "status": "done"},
+      {"id": "collect", "label": "采集 50/100", "status": "done"},
+      {"id": "train", "label": "训练 E02 ~58K", "status": "in_progress"},
+      {"id": "eval", "label": "真机评估 E02", "status": "pending"},
       {"id": "fail", "label": "失败归类", "status": "pending"},
-      {"id": "recapture", "label": "加采到 50", "status": "done"}
+      {"id": "recapture", "label": "加采到 100", "status": "blocked"}
     ]
   }
 }

@@ -2,9 +2,13 @@
 
 End-to-end real-world robot learning on LeRobot SO-101.
 
-`20 demonstrations (target 100) · ACT (training) · Diffusion Policy · SmolVLA · OOD Generalization`
+<!-- readme:tagline:start -->
+`50 demonstrations (target 100) · ACT E02 ~58K/100K · Diffusion Policy · SmolVLA · OOD Generalization`
+<!-- readme:tagline:end -->
 
-> 数字以 `experiments/INDEX.md` 与 `results/` 为准，未测完不写成功率。
+<!-- readme:footnote:start -->
+> 进度由 `lab-log/metrics.json` 生成；实验数字以 `experiments/INDEX.md` 与 `results/` 为准，未测完不写成功率。
+<!-- readme:footnote:end -->
 
 ## Demo
 
@@ -27,12 +31,15 @@ End-to-end real-world robot learning on LeRobot SO-101.
 
 课表与全部可复制命令：**[docs/COURSE.md](docs/COURSE.md)**
 
+<!-- readme:progress:start -->
 | 周 | 状态 |
 |---|---|
 | W0 环境 / W1 遥操 | 完成 |
-| W2 Dataset | 20/100 episodes |
-| W3 ACT | 进行中 |
-| W4–W12 | 未开始 |
+| W2 Dataset | 50/100 episodes |
+| W3 ACT | E01 完成；E02 ~58K/100K（ckpt 20K/40K） |
+| W4 拔 Leader | rollout OK；Demo GIF 已上 |
+| W5–W12 | 未开始 |
+<!-- readme:progress:end -->
 
 Architecture → Results → Benchmark → Failure Analysis → Reproduction：随周次补齐。
 
@@ -42,7 +49,7 @@ Architecture → Results → Benchmark → Failure Analysis → Reproduction：�
 2. `verify.cmd`
 3. 按 [docs/COURSE.md](docs/COURSE.md) 执行当周命令
 
-Windows 环境细节见 [使用说明.md](使用说明.md)。实验台账：`lab-log/`。
+Windows 环境细节见 [使用说明.md](使用说明.md)。实验台账：`lab-log/`。刷新 README 进度：`sync-readme.cmd`。
 
 ## 仓库
 
@@ -53,7 +60,7 @@ docs/        课表与方法
 experiments/ E01–E08
 results/     eval / ACT vs DP
 assets/      Demo
-scripts/     评测与部署（W4 起）
+scripts/     sync-readme.py、评测与部署（W4 起）
 ```
 
 `env/`、`cache/`、`outputs/` 不进 Git。

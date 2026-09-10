@@ -91,6 +91,27 @@
 
 `docs/COURSE.md` 只改顶部状态表数字（如 `20/100`、`~30K/100K`），不要改用户要复制的命令块。
 
+## README 同步（`scripts/sync-readme.py`）
+
+数据源：`lab-log/metrics.json` 的 `readme` 段。生成目标：`README.md` 内三个标记块（tagline / footnote / progress）。Demo GIF 与说明手写，不进脚本。
+
+```json
+"readme": {
+  "demonstrations": 50,
+  "demonstrations_target": 100,
+  "headline_policy": "ACT E02",
+  "headline_step": "~58K/100K",
+  "footnote": "进度由 lab-log/metrics.json 生成；…",
+  "week_rows": [
+    {"label": "W2 Dataset", "status": "50/100 episodes"}
+  ]
+}
+```
+
+**何时跑 sync**：episodes 到 20/50/100、ckpt 20K/40K/100K 落盘、某周状态变化、Demo 上新、应对外 push 前。训练中间 step 只更 `metrics.json` 曲线与 `readme.headline_step`，不必每个 step commit README。
+
+命令：`sync-readme.cmd` 或 `python scripts/sync-readme.py`。
+
 ## CURRENT.md 只保留「现在」
 
 只写：课表第几周、正在跑什么、最新可用数据/权重、阻塞点、下一步（来自课表）。历史放到 experiments / sessions / course.md。

@@ -9,8 +9,8 @@
 | W0 环境 | 完成 | `env/` + `verify.cmd` |
 | W1 遥操 | 完成 | 校准 + teleop |
 | W2 数据 | **进行中 50/100** | `so101_pick_place_20260910_011033` |
-| W3 ACT | **E01 完成 100K** | `outputs/train/act_so101_pick_place/checkpoints/100000` |
-| W4 拔 Leader | **进行中** | 姿态对齐后 rollout OK；缺 `assets/demo.mp4` |
+| W3 ACT | **E02 重训中 ~58K/100K** | `outputs/train/act_so101_e02` ckpt 20K/40K；E01 `100000` 仍可用 |
+| W4 拔 Leader | **进行中** | rollout OK；Demo GIF 已上；缺 `assets/demo.mp4` |
 | W5–W12 | 未开始 | — |
 
 任务只做一件：`Pick up the object and place it down.`（Random-position Pick & Place）
@@ -19,7 +19,7 @@
 
 ## 现在立刻
 
-E01 已训完。W2 已到 **50 ep**。下一步：**训 E02**（勿覆盖 E01 目录）。失败按 **←**。**不要按 Esc**。
+E02 已重训并越过 P012；**~58K/100K 进行中**，ckpt 20K/40K 已存。**等它跑完**，不要打断、不要同窗口录数据。
 
 ```bat
 lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=act --output_dir=outputs/train/act_so101_e02 --job_name=act_so101_e02 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000

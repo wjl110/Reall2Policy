@@ -52,6 +52,7 @@ description: >-
 同步规则：
 
 - **磁盘变了**（episodes、step、新 ckpt、新结果文件）→ 更新 `lab-log/course.md` **和** `docs/COURSE.md` 顶部状态表，并刷新图表。
+- **里程碑或 `metrics.json` 的 `readme` 段变化**（episodes 档位、ckpt 落盘、某周状态、Demo 上新、训练 job/step 摘要）→ 更新 `metrics.json` 的 `readme` 后执行 `python scripts/sync-readme.py`（或 `sync-readme.cmd`）。**禁止手改** README 里 `<!-- readme:* -->` 标记块内的内容。
 - **用户完成了某周一步** → 该周标完成/进行中，记下日期、命令、效果；`experiments/INDEX.md` 同步 E01–E08。
 - **用户想跳周或并行 DP/VLA** → 先对照课表拦住，写进 course.md「偏离」，再问是否仍要做。
 - 会话汇报必须带一句：**本周实践 vs 课表**。
@@ -76,6 +77,7 @@ description: >-
 | 重要日志片段、checkpoint、数据集路径 | 对应实验条目的「日志 / 节点」 |
 | 用户说「完成了 / 失败了 / 效果如何」 | 补全效果与结论，并勾课表 |
 | checkpoint / episodes / eval 数字变化 | `metrics.json` + `charts.md` 四张图 |
+| 里程碑或 README 应对外展示的进度变化 | 更新 `metrics.json` 的 `readme` + 运行 `scripts/sync-readme.py` |
 
 禁止只在聊天里总结、不写 `lab-log/`。
 
@@ -115,6 +117,8 @@ lab-log/
   nodes/hardware.md
 docs/COURSE.md             # 用户抄命令的课表（Agent 只改顶部状态表）
 experiments/INDEX.md       # E01–E08 数字
+scripts/sync-readme.py    # 从 metrics.json 生成 README 进度块
+README.md                  # Demo 手写；tagline/进度表由 sync-readme 生成
 ```
 
 - 实验短名用英文连字符：`act-train`、`pick-place-20`。

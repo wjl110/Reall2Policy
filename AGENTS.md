@@ -6,4 +6,4 @@
 
 `.cursor/skills/reall2policy-lab-log/SKILL.md`
 
-记录位置：`lab-log/`。要记下做了什么、实验数据、效果、重要日志、节点信息，对照 `docs/COURSE.md` 的学习实践（`lab-log/course.md`），以及学习进程、项目收益、学习曲线、数据回收图（`lab-log/metrics.json`、`lab-log/charts.md`）。细则以该 Skill 为准。下一步命令优先从课表复制，禁止无故跳周。
+记录位置：`lab-log/`。要记下做了什么、实验数据、效果、重要日志、节点信息，对照 `docs/COURSE.md` 的学习实践（`lab-log/course.md`），以及学习进程、项目收益、学习曲线、数据回收图（`lab-log/metrics.json`、`lab-log/charts.md`）。README 进度由 `scripts/sync-readme.py` 从 `metrics.json` 的 `readme` 段生成；里程碑时运行 `sync-readme.cmd`。细则以该 Skill 为准。下一步命令优先从课表复制，禁止无故跳周。
