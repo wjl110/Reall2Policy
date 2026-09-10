@@ -10,8 +10,16 @@ End-to-end real-world robot learning on LeRobot SO-101.
 
 <table>
   <tr>
-    <td align="center"><img src="assets/demo.gif" width="360" alt="SO-101 pick and place" /></td>
-    <td align="center"><img src="assets/demo_0.gif" width="360" alt="SO-101 showcase" /></td>
+    <td align="center" valign="top">
+      <img src="assets/demo.gif" width="360" alt="SO-101 leader-follower teleop pick and place, three-quarter view" />
+      <br />
+      Leader（黑）带动 Follower（白）遥操抓放，斜视
+    </td>
+    <td align="center" valign="top">
+      <img src="assets/demo_0.gif" width="360" alt="SO-101 leader-follower teleop pick and place, side view" />
+      <br />
+      同一抓放任务的侧视，看接近与落位
+    </td>
   </tr>
 </table>
 
