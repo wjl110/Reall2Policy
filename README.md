@@ -13,12 +13,12 @@ End-to-end real-world robot learning on LeRobot SO-101.
     <td align="center" valign="top">
       <img src="assets/demo.gif" width="360" alt="SO-101 leader-follower teleop pick and place, three-quarter view" />
       <br />
-      Leader（黑）带动 Follower（白）遥操抓放，斜视
+      Leader臂（黑）不动 | Follower臂（白）独自抓放，远视角
     </td>
     <td align="center" valign="top">
       <img src="assets/demo_0.gif" width="360" alt="SO-101 leader-follower teleop pick and place, side view" />
       <br />
-      同一抓放任务的侧视，看接近与落位
+      同一抓放任务的接近与落位，近视角
     </td>
   </tr>
 </table>
