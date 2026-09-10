@@ -1,6 +1,6 @@
 # 实验台账总览
 
-最后更新：2026-09-10 03:22
+最后更新：2026-09-10 23:17
 
 
 | 区    | 文件                                                               |
@@ -22,7 +22,9 @@
 | 2026-09-10 | 校准 + 遥操打通            | 成功   | `calibration/` Leader COM3 / Follower COM4         | [experiments/2026-09-10_calibrate-teleop.md](experiments/2026-09-10_calibrate-teleop.md) |
 | 2026-09-10 | 首次录制试跑               | 部分成功 | 目录已于 03:19 清理（历史见实验文件）                      | [experiments/2026-09-10_first-record.md](experiments/2026-09-10_first-record.md)         |
 | 2026-09-10 | 抓放 20 集采集            | 成功   | `so101_pick_place_20260910_011033` 20ep / 9000f    | [experiments/2026-09-10_pick-place-20.md](experiments/2026-09-10_pick-place-20.md)       |
-| 2026-09-10 | ACT 训练 100K          | 进行中  | ckpt `020000`+`040000`，约 40K                        | [experiments/2026-09-10_act-train.md](experiments/2026-09-10_act-train.md)               |
+| 2026-09-10 | 抓放补采到 50 集           | 成功   | 同 root **50ep / 27000f**                          | [experiments/2026-09-10_pick-place-50.md](experiments/2026-09-10_pick-place-50.md)       |
+| 2026-09-10 | ACT 训练 100K          | 成功   | ckpt `020000`/`040000`/`100000`，loss≈0.051            | [experiments/2026-09-10_act-train.md](experiments/2026-09-10_act-train.md)               |
+| 2026-09-10 | E01 真机 rollout       | 成功   | 姿态对齐后抓放 OK；折叠态抖动见 P010                   | [experiments/2026-09-10_rollout-e01.md](experiments/2026-09-10_rollout-e01.md)           |
 | 2026-09-10 | 建立实验台账 Skill         | 成功   | `lab-log/` + `.cursor/skills/reall2policy-lab-log` | [experiments/2026-09-10_lab-log-skill.md](experiments/2026-09-10_lab-log-skill.md)       |
 | 2026-09-10 | 12 周课表落地             | 成功   | `docs/COURSE.md` + configs/experiments/results     | [experiments/2026-09-10_course-setup.md](experiments/2026-09-10_course-setup.md)         |
 
@@ -34,7 +36,7 @@
 
 | 目录                                   | episodes | frames   | 用途                 |
 | ------------------------------------ | -------- | -------- | ------------------ |
-| **so101_pick_place_20260910_011033** | **20**   | **9000** | **当前唯一本地数据 / 训练中** |
+| **so101_pick_place_20260910_011033** | **50**   | **27000** | **E02 数据已齐；总目标 100** |
 
 2026-09-10 03:19 用户删除试录、空壳、中断目录（`so101_first_test_*`、`so101_pick_place` 空壳、`..._010322`～`..._010721`）。
 
@@ -49,4 +51,5 @@
 - P004 夹爪 id=6 Overload
 - P005 WinError 1314 无法创建 `checkpoints/last` 符号链接
 - P006 本地视频训练要用 `video_backend=pyav`
+- P010 折叠起始姿态 rollout 只抖动，必须先摆到录制姿态
 

@@ -1,40 +1,34 @@
 # 当前状态
 
-更新：2026-09-10 03:22
+更新：2026-09-10 23:17
 
 ## 课表
 
-**W3 E01 进行中 + W2 数据 20/100。** 详见 [course.md](course.md)。图表：[charts.md](charts.md)。  
-本周该做：让 ACT 接着跑。本周不要：补采同一数据集、开 Diffusion/SmolVLA、做 W11。
+**W2 本批完成：50/100。下一步 W3 E02 训练（50 ep）。**  
+不要并行 DP/VLA；不要另开数据集目录。
 
 ## 正在跑
 
-ACT 训练 **resume 中**（终端 `activate.cmd`）。
-
-- 约 **step 40K** / 100K，loss≈0.082，l1≈0.078，~9.7 step/s，显存 2.10 GB
-- 已写入 **`checkpoints/040000`**（存盘成功）
-- 输出：`outputs/train/act_so101_pick_place`
-- **不要停，不要往这份数据里 resume 录制**
+无。录制已正常结束（25 集本轮，29.98 Hz）。
 
 ## 最新可用数据
 
 | 项 | 值 |
 |----|-----|
 | 数据集 | `data/local/so101_pick_place_20260910_011033` |
-| 规模 | 20 episodes / 9000 frames（课表目标 100） |
-| 权重 | `checkpoints/020000`、`040000` |
-| 课表完成度 | 约 23% |
-| 飞轮 | 卡在加采（训练占用同一 root） |
+| 规模 | **50 episodes / 27000 frames** / 30 fps |
+| 权重 | E01 `checkpoints/100000`（20 ep 上训的） |
+| 真机 | 对齐后抓放成功（P010） |
 
 ## 阻塞 / 未完成
 
-- E01 未到 100K。
-- Week 2：20/100，且未做位置/光照网格。
-- GitHub 杂数据删除随本版推送。
-- 实机 rollout 未做。
+- 总目标仍缺 50 集（E03 用）。
+- W4 Demo 未录。
 
 ## 下一步（按课表）
 
-1. 让 E01 跑完 100K。
-2. 训练结束后补采 +30→50，再 +50→100。
-3. 再训 E02/E03；然后 W4 拔 Leader 做 rollout。
+训 E02（新输出目录，勿覆盖 E01）：
+
+```bat
+lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=act --output_dir=outputs/train/act_so101_e02 --job_name=act_so101_e02 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000
+```

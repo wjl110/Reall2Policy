@@ -134,6 +134,7 @@ experiments/INDEX.md       # E01–E08 数字
 ## 硬规则（本机）
 
 - 录制/训练默认 `--dataset.push_to_hub=false`、`--policy.push_to_hub=false`、`--wandb.enable=false`。
+- 凡带相机的 `lerobot-record` / `lerobot-teleoperate` / `lerobot-rollout`，默认加 `--display_data=true`（Rerun 实时画面）。给用户抄的命令不得漏这一项。`lerobot-replay` 无此开关。
 - 本地数据集训练加 `--dataset.video_backend=pyav`，并写明 `--dataset.root=`（时间戳目录）。
 - 串口：Leader=`COM3` / `so101_leader`；Follower=`COM4` / `so101_follower`。变化则更新 `nodes/hardware.md`。
 - 不把 token、`.env`、密钥写入 lab-log。

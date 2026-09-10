@@ -1,15 +1,17 @@
 # Real2Policy 12 周课表（本机命令）
 
 固定：双击 `start.cmd` 再贴命令。Leader=`COM3` / Follower=`COM4`。不上 Hub。
+带相机的 record / teleoperate / rollout **一律** `--display_data=true`（Rerun 实时画面；本机 OpenCV headless，没有 cv2 窗口）。
 训练窗口占用 GPU 时，**不要**在同一窗口录数据；也不要 `resume` 正在被训练读的那个数据集。
 
 | 周 | 状态 | 产物 |
 |---|---|---|
 | W0 环境 | 完成 | `env/` + `verify.cmd` |
 | W1 遥操 | 完成 | 校准 + teleop |
-| W2 数据 | **进行中 20/100** | `so101_pick_place_20260910_011033` |
-| W3 ACT | **进行中 ~40K/100K** | `outputs/train/act_so101_pick_place` |
-| W4–W12 | 未开始 | — |
+| W2 数据 | **进行中 50/100** | `so101_pick_place_20260910_011033` |
+| W3 ACT | **E01 完成 100K** | `outputs/train/act_so101_pick_place/checkpoints/100000` |
+| W4 拔 Leader | **进行中** | 姿态对齐后 rollout OK；缺 `assets/demo.mp4` |
+| W5–W12 | 未开始 | — |
 
 任务只做一件：`Pick up the object and place it down.`（Random-position Pick & Place）
 
@@ -17,19 +19,25 @@
 
 ## 现在立刻
 
-训练接着跑，别停。看 step / loss：
+E01 已训完。W2 已到 **50 ep**。下一步：**训 E02**（勿覆盖 E01 目录）。失败按 **←**。**不要按 Esc**。
 
 ```bat
-findstr /C:"step:" C:\Users\18431\.cursor\projects\d-SO-ARM101\terminals\6.txt
+lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=act --output_dir=outputs/train/act_so101_e02 --job_name=act_so101_e02 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000
 ```
 
-若中断，续训：
+补采到 100（E03，等 E02 训完再录）：
 
 ```bat
-lerobot-train --config_path=outputs/train/act_so101_pick_place/checkpoints/020000/pretrained_model/train_config.json --resume=true
+lerobot-record --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.num_episodes=50 --dataset.episode_time_s=20 --dataset.reset_time_s=8 --dataset.single_task="Pick up the object and place it down." --dataset.push_to_hub=false --resume=true --display_data=true
 ```
 
-训练结束后才做 W2 补采。
+复跑评估（先摆姿态）：
+
+```bat
+lerobot-rollout --strategy.type=base --policy.path=outputs/train/act_so101_pick_place/checkpoints/100000/pretrained_model --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --task="Pick up the object and place it down." --duration=60 --display_data=true
+```
+
+折叠收臂会只抖（P010），不要那样起步。
 
 ---
 
@@ -50,7 +58,7 @@ lerobot-calibrate --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so10
 ```
 
 ```bat
-lerobot-teleoperate --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --display_data=true
+lerobot-teleoperate --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --display_data=true
 ```
 
 夹爪过载：松爪，等灯灭再开。
@@ -66,7 +74,7 @@ lerobot-teleoperate --robot.type=so101_follower --robot.port=COM4 --robot.id=so1
 **+30 → 共 50（E02 用）：**
 
 ```bat
-lerobot-record --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.num_episodes=30 --dataset.episode_time_s=20 --dataset.reset_time_s=8 --dataset.single_task="Pick up the object and place it down." --dataset.push_to_hub=false --resume=true
+lerobot-record --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.num_episodes=30 --dataset.episode_time_s=20 --dataset.reset_time_s=8 --dataset.single_task="Pick up the object and place it down." --dataset.push_to_hub=false --resume=true --display_data=true
 ```
 
 **再 +50 → 共 100（E03 用）：** 同上，只改 `--dataset.num_episodes=50`。
@@ -91,11 +99,11 @@ jupyter notebook experiments\E002\dataset_analysis.ipynb
 
 | Exp | Episodes | 数据 | 输出 |
 |---|---:|---|---|
-| E01 | 20 | 当前这份 | `outputs/train/act_so101_pick_place`（在跑） |
+| E01 | 20 | 当前这份 | `outputs/train/act_so101_pick_place`（**100K 完成**） |
 | E02 | 50 | 同 root 补到 50 后 | `outputs/train/act_so101_e02` |
 | E03 | 100 | 同 root 补到 100 后 | `outputs/train/act_so101_e03` |
 
-E01 已启动，勿重开同目录。E02 示例（50 条齐了再跑）：
+E01 勿重开同目录。E02（50 条已齐，现在跑）：
 
 ```bat
 lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=act --output_dir=outputs/train/act_so101_e02 --job_name=act_so101_e02 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000
@@ -109,13 +117,13 @@ E03：`--output_dir=outputs/train/act_so101_e03 --job_name=act_so101_e03`。
 
 ## Week 4：拔掉 Leader（Milestone 1）
 
-用当前最好 ckpt（先 E01 的 `020000` 或训完后的最后一档）：
+用当前最好 ckpt（E01 的 `100000`）：
 
 ```bat
-lerobot-rollout --strategy.type=base --policy.path=outputs/train/act_so101_pick_place/checkpoints/020000/pretrained_model --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --task="Pick up the object and place it down." --duration=60 --display_data=true
+lerobot-rollout --strategy.type=base --policy.path=outputs/train/act_so101_pick_place/checkpoints/100000/pretrained_model --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --task="Pick up the object and place it down." --duration=60 --display_data=true
 ```
 
-训完 100K 后把 `020000` 换成最大数字目录。录 30–60s Demo → `assets/demo.mp4`。
+必须先摆到录制起始姿态。录 30–60s Demo → `assets/demo.mp4`。
 
 ---
 
@@ -136,7 +144,7 @@ lerobot-rollout --strategy.type=base --policy.path=outputs/train/act_so101_pick_
 针对 W6 最差条件加采 hard cases（例 +50）：
 
 ```bat
-lerobot-record --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.num_episodes=50 --dataset.episode_time_s=20 --dataset.reset_time_s=8 --dataset.single_task="Pick up the object and place it down." --dataset.push_to_hub=false --resume=true
+lerobot-record --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.num_episodes=50 --dataset.episode_time_s=20 --dataset.reset_time_s=8 --dataset.single_task="Pick up the object and place it down." --dataset.push_to_hub=false --resume=true --display_data=true
 ```
 
 然后 ACT-v2：

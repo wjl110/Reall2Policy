@@ -35,8 +35,8 @@ credentials.json
 hf_token
 token
 
-# OS / IDE
-.DS_Store
+# Windows folder metadata
+desktop.ini
 Thumbs.db
 .vscode/
 .idea/
