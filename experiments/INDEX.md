@@ -9,6 +9,6 @@
 | E03 | W3 | ACT | 100 | 100000 | 1 | 0.168 @100K | 连续抓取 OK（单次，未见折叠） | `outputs/train/act_so101_e03` | **完成（bf16）** |
 | E04 | W4 | ACT 真机 | 100 | 100000 | 1 | 0.168 @E03 | E03 连续抓取 OK | `assets/demo.mp4` | **完成** |
 | E05 | W5–6 | ACT eval/OOD | 100 | 100000 | 1 | 0.168 @E03 | 37 / 0 / 0 / 1 / 19 | `results/eval_w56.md` | **完成** |
-| E06 | W7 | DAgger→ACT-v2 | 14 | 20000 | 1 | | | `act_so101_v2/020000` | **训练中**（监控断） |
+| E06 | W7 | DAgger→ACT-v2 | 14 | 80000 | 1 | | | `act_so101_v2/080000` | **训练中** |
 | E07 | W8 | Diffusion | 同 E03 数据 | 100000 | 1 | | | `outputs/train/dp_so101_v1` | 未开始 |
 | E08 | W9–10 | SmolVLA | | | 1 | | | `outputs/train/smolvla_so101_v1` | 未开始 |

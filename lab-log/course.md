@@ -2,13 +2,13 @@
 
 课表原文（抄命令）：[`docs/COURSE.md`](../docs/COURSE.md)  
 实验数字：[`experiments/INDEX.md`](../experiments/INDEX.md)  
-更新：2026-09-13 03:22
+更新：2026-09-13 04:45
 
 ## 当前焦点
 
-**W7：ACT-v2 仍在跑**，`020000` 已落盘。Cursor 监控已断。
+**W7：ACT-v2 正常在跑**（`080000` 已落）。实时监控已开。
 
-本周实践 vs 课表：加采完成，训练进行中（已过 20K）。
+本周实践 vs 课表：加采完成，训练过 80K，未到 100K。
 
 ## 总进度
 
@@ -20,11 +20,11 @@
 | W3 ACT | E01/E02/E03 各 100K | **完成** | E03 `100000` loss 0.168 | 进入 W4 rollout |
 | W4 拔 Leader | 真机 rollout + Demo | **完成** | `assets/demo.mp4` 约 105MB | 进库前需压缩 |
 | W5–6 Eval/OOD | 填评测表 | **完成** | Cam 19/90；Pos/Obj 0 | 无 |
-| W7 Flywheel | hard cases + ACT-v2 | **进行中** | v2 `020000` 已落；监控断、进程在 | 未到 100K |
+| W7 Flywheel | hard cases + ACT-v2 | **进行中** | v2 `080000` | 未到 100K |
 | W8 ACT vs DP | 同数据对比 | 未开始 | 模板 `results/act_vs_dp.md` | 禁止现在并行 |
 | W9–10 SmolVLA | 语言指令 | 未开始 | — | 禁止现在并行 |
 | W11 World Model | 预测实验 | 未开始 | — | **不到该周不要做** |
-| W12 作品集 | GitHub + Demo | 进行中 | https://github.com/wjl110/Reall2Policy | README 四格：demo / demo_0 / scraping / corrective_demo |
+| W12 作品集 | GitHub + Demo | 进行中 | https://github.com/wjl110/Reall2Policy | README 四格 Demo + 评测聚类 + 作者信息 |
 
 ## 按周实践记录
 
@@ -70,13 +70,13 @@
 - 课表：W6 最差条件加采 + ACT-v2
 - 计划：2026-09-12 约定 W5–6 完成后用官方 `--strategy.type=dagger --strategy.record_autonomous=true`（整段保存，纠正打 `intervention`）
 - 约束：新开 `local/rollout_so101_dagger`，不 resume 现有 100 ep；插回 Leader
-- 实际：第一趟 0 ep（P018）。dagger2 **14 ep / 37494 帧**。02:32 开 ACT-v2；03:03 **`020000` 落盘**；03:22 监控 aborted、进程仍在
+- 实际：第一趟 0 ep（P018）。dagger2 **14 ep / 37494 帧**。02:32 开 ACT-v2；20/40/60K 已落；04:40 **`080000`**
 - 差距：训练未到 100K
 
 ### W12 作品集
 
 - 课表：GitHub + Demo 结构
-- 实际：2026-09-13 README Demo 第二行并排 `scraping.gif`（21.5MB）与 `corrective_demo.gif`（42.9MB），与既有 `demo.gif` / `demo_0.gif` 同规格
+- 实际：2026-09-13 README Demo 四格；同日补评测聚类（`eval_w56.md`）与作者信息
 - 差距：W8–W11 未做；作品集结构未齐
 
 ### W8–W11

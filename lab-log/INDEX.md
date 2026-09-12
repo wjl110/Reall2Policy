@@ -1,6 +1,6 @@
 # 实验台账总览
 
-最后更新：2026-09-13 03:22
+最后更新：2026-09-13 04:43
 
 
 | 区    | 文件                                                               |
@@ -38,7 +38,7 @@
 | 2026-09-12 | E03 Camera Shift       | 部分 | 19/90；夹下预张爪；换侧斜前 | [experiments/2026-09-12_eval-camera-shift.md](experiments/2026-09-12_eval-camera-shift.md) |
 | 2026-09-12 | W7 DAgger 第一趟       | 失败 | 18min / 7 次纠正 / 0 ep（P018） | [experiments/2026-09-12_dagger-collect.md](experiments/2026-09-12_dagger-collect.md)       |
 | 2026-09-13 | W7 DAgger dagger2      | 成功 | 14 ep / 37494 帧 / 61 纠正 | [experiments/2026-09-13_dagger2-collect.md](experiments/2026-09-13_dagger2-collect.md)     |
-| 2026-09-13 | W7 ACT-v2 训练         | 进行中 | `020000` 已落；监控断、进程在 | [experiments/2026-09-13_act-train-v2.md](experiments/2026-09-13_act-train-v2.md)           |
+| 2026-09-13 | W7 ACT-v2 训练         | 进行中 | `080000`；实时监控已开 | [experiments/2026-09-13_act-train-v2.md](experiments/2026-09-13_act-train-v2.md)           |
 | 2026-09-10 | 建立实验台账 Skill         | 成功   | `lab-log/` + `.cursor/skills/reall2policy-lab-log` | [experiments/2026-09-10_lab-log-skill.md](experiments/2026-09-10_lab-log-skill.md)       |
 | 2026-09-10 | 12 周课表落地             | 成功   | `docs/COURSE.md` + configs/experiments/results     | [experiments/2026-09-10_course-setup.md](experiments/2026-09-10_course-setup.md)         |
 

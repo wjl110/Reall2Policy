@@ -12,7 +12,7 @@
 | W3 ACT | **E01/E02/E03 完成 100K** | E03 loss 0.168 @100K |
 | W4 拔 Leader | **完成** | `assets/demo.mp4` |
 | W5–6 Eval/OOD | **完成** | Cam 19/90；Pos/Obj 0/90 |
-| W7 Flywheel | **进行中** | ACT-v2 训练中，`020000` 已落 |
+| W7 Flywheel | **进行中** | ACT-v2 训练中，`080000` 已落 |
 | W8–W12 | 未开始 | — |
 
 任务只做一件：`Pick up the object and place it down.`（Random-position Pick & Place）
@@ -21,7 +21,7 @@
 
 ## 现在立刻
 
-W7：ACT-v2 **进程仍在跑**（Cursor 监控已断）。`outputs/train/act_so101_v2/checkpoints/020000` 已落。等 100K。不要录数据、不要 resume dagger2。不要并行 DP/VLA。若进程死了再 resume：
+W7：ACT-v2 **在跑**（`080000` 已落）。实时页 `lab-log/train-live.html`。等 100K。不要录数据、不要 resume dagger2。不要并行 DP/VLA。若进程死了再 resume：
 
 ```bat
 lerobot-train --resume=true --dataset.repo_id=local/rollout_so101_dagger2 --dataset.root=D:\SO-ARM101\data\local\rollout_so101_dagger2 --dataset.video_backend=pyav --policy.type=act --output_dir=outputs/train/act_so101_v2 --job_name=act_so101_v2 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000 --accelerator.mixed_precision=bf16

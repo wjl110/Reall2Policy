@@ -1,7 +1,7 @@
 {
-  "updated": "2026-09-13T03:22:00+08:00",
-  "source": "lab-log + docs/COURSE.md + terminals/309344.txt + README scraping/corrective GIFs",
-  "course_overall_pct": 63,
+  "updated": "2026-09-13T04:45:00+08:00",
+  "source": "lab-log + docs/COURSE.md + README eval cluster + author",
+  "course_overall_pct": 66,
   "weeks": [
     {"id": "W0", "name": "环境", "progress_pct": 100, "benefit_plan": 2, "benefit_realized": 2},
     {"id": "W1", "name": "遥操", "progress_pct": 100, "benefit_plan": 4, "benefit_realized": 4},
@@ -9,7 +9,7 @@
     {"id": "W3", "name": "ACT", "progress_pct": 100, "benefit_plan": 7, "benefit_realized": 7},
     {"id": "W4", "name": "拔Leader", "progress_pct": 100, "benefit_plan": 9, "benefit_realized": 9},
     {"id": "W5-6", "name": "Eval/OOD", "progress_pct": 100, "benefit_plan": 8, "benefit_realized": 8},
-    {"id": "W7", "name": "Flywheel", "progress_pct": 65, "benefit_plan": 8, "benefit_realized": 4},
+    {"id": "W7", "name": "Flywheel", "progress_pct": 85, "benefit_plan": 8, "benefit_realized": 6},
     {"id": "W8", "name": "ACT vs DP", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
     {"id": "W9-10", "name": "SmolVLA", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
     {"id": "W11", "name": "World Model", "progress_pct": 0, "benefit_plan": 6, "benefit_realized": 0},
@@ -20,7 +20,7 @@
     "demonstrations_target": 100,
     "headline_policy": "ACT E03",
     "headline_step": "100K",
-    "last_milestone": "2026-09-13 ACT-v2 20K ckpt 已落盘，训练仍在跑",
+    "last_milestone": "2026-09-13 README 上评测聚类与作者信息",
     "footnote": "进度由 `lab-log/metrics.json` 生成；实验数字以 `experiments/INDEX.md` 与 `results/` 为准，未测完不写成功率。",
     "week_rows": [
       {"label": "W0 环境 / W1 遥操", "status": "完成"},
@@ -28,7 +28,7 @@
       {"label": "W3 ACT", "status": "E01/E02/E03 均完成 100K"},
       {"label": "W4 拔 Leader", "status": "完成 demo.mp4"},
       {"label": "W5–6 Eval/OOD", "status": "完成；Cam 19/90；Pos/Obj 0"},
-      {"label": "W7 Flywheel", "status": "ACT-v2 训练中，20K 已落"},
+      {"label": "W7 Flywheel", "status": "ACT-v2 训练中，80K 已落"},
       {"label": "W8–W12", "status": "未开始"}
     ]
   },
@@ -68,8 +68,8 @@
     "job": "act_so101_v2",
     "policy": "act",
     "mixed_precision": "bf16",
-    "caption": "ACT-v2 02:32 开训。03:03 20K ckpt 已落，20K loss 被进度条覆盖不编造。监控 03:22 aborted，进程仍在。Source: ot_train.py。",
-    "latest_step": 20000,
+    "caption": "ACT-v2 02:32 开训。20/40/60/80K 已落。这些点的 loss 被进度条覆盖不编造。Source: ot_train.py + watch-train.py。",
+    "latest_step": 80000,
     "steps_k": [0.2, 0.4, 0.6, 0.8],
     "loss": [6.967, 3.112, 2.688, 2.413],
     "l1_loss": [0.705, 0.628, 0.611, 0.589],
