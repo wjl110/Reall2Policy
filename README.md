@@ -3,7 +3,7 @@
 End-to-end real-world robot learning on LeRobot SO-101.
 
 <!-- readme:tagline:start -->
-`50 demonstrations (target 100) · ACT E02 ~58K/100K · Diffusion Policy · SmolVLA · OOD Generalization`
+`100 demonstrations (target 100) · ACT E03 100K · Diffusion Policy · SmolVLA · OOD Generalization`
 <!-- readme:tagline:end -->
 
 <!-- readme:footnote:start -->
@@ -25,6 +25,18 @@ End-to-end real-world robot learning on LeRobot SO-101.
       同一抓放任务的接近与落位，近视角
     </td>
   </tr>
+  <tr>
+    <td align="center" valign="top">
+      <img src="assets/scraping.gif" width="360" alt="SO-101 continuous scraping, policy running autonomously" />
+      <br />
+      连续 Scraping：策略自主连续作业
+    </td>
+    <td align="center" valign="top">
+      <img src="assets/corrective_demo.gif" width="360" alt="SO-101 corrective demonstration with leader intervention" />
+      <br />
+      Corrective demonstration（纠正示教）
+    </td>
+  </tr>
 </table>
 
 ## 当前进度
@@ -35,10 +47,12 @@ End-to-end real-world robot learning on LeRobot SO-101.
 | 周 | 状态 |
 |---|---|
 | W0 环境 / W1 遥操 | 完成 |
-| W2 Dataset | 50/100 episodes |
-| W3 ACT | E01 完成；E02 ~58K/100K（ckpt 20K/40K） |
-| W4 拔 Leader | rollout OK；Demo GIF 已上 |
-| W5–W12 | 未开始 |
+| W2 Dataset | 100/100 episodes |
+| W3 ACT | E01/E02/E03 均完成 100K |
+| W4 拔 Leader | 完成 demo.mp4 |
+| W5–6 Eval/OOD | 完成；Cam 19/90；Pos/Obj 0 |
+| W7 Flywheel | ACT-v2 训练中，20K 已落 |
+| W8–W12 | 未开始 |
 <!-- readme:progress:end -->
 
 Architecture → Results → Benchmark → Failure Analysis → Reproduction：随周次补齐。
