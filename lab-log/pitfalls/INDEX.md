@@ -22,6 +22,10 @@
 | P016 | 物体在 A、策略去 B 找（位置幻觉） | 高 |
 | P017 | Object OOD 夹爪开合与正常夹取相反 | 中 |
 | P018 | DAgger 连续录 Ctrl-C 后 0 episode | 高 |
+| P019 | ACT-v2 夹后伸缩、不放置 | 高 |
+| P020 | ACT-v3 夹到物体前头再往前推滑落 | 高 |
+| P021 | 训 Diffusion 缺 lerobot[diffusion] | 中 |
+| P022 | 倒计时大屏整页刷新会退出全屏 | 低 |
 
 ---
 
@@ -40,6 +44,7 @@
 - 根因：`lerobot-record` 默认 `push_to_hub=true`，未登录 HF。
 - 解法：一律加 `--dataset.push_to_hub=false`。训练加 `--policy.push_to_hub=false --wandb.enable=false`。
 - 以后：未 `huggingface-cli login` 不要开上传。
+- 再现：2026-09-13 dagger3 后台 `Background push failed` 401。本地 11 ep 已齐，可忽略。
 
 ### P003 同名数据集被改成带时间戳目录
 
@@ -97,7 +102,7 @@
 - `outputs/` 权重超 100MB，已 gitignore。
 - `env/`、`cache/` 不上传。
 - `lerobot/.git` 会让父仓库把它当 submodule；纳入时需去掉嵌套 git 元数据。
-- 仓库创建仍待 `gh auth login`。
+- 再现：2026-09-15 push。`assets/demo.mp4` 100.2MB；100 ep 的 `file-003.mp4`/`file-004.mp4` 约 132MB；dagger2/3 与 `so101_v3_mix` 各数百 MB。均未进库。远程已是 `wjl110/Reall2Policy`。
 
 ### P010 折叠起始姿态 rollout 只抖动
 
@@ -166,6 +171,9 @@ lerobot-train --config_path=D:\SO-ARM101\outputs\train\act_so101_e03\checkpoints
 - 再现：2026-09-12 Position OOD 6×15=90，全部失败。训练扫过区、不在夹下。第 1 轮找失败但能张爪；第 2–6 轮定位失败且夹爪不开。
 - 再现：2026-09-12 Object OOD 0/90。半透明盒+牙刷头。近处在附近抓仍找不到；远处空中抓。
 - 再现：2026-09-12 Lighting 第 5 轮，夹子正下方未识别并远离物体。
+- 再现：2026-09-13 ACT-v2 Position **0/15**。找不到，空中空夹，未碰到。DAgger 14 ep 未补上找物。
+- 再现：2026-09-13 ACT-v3 IID 第 4 轮 7–15、第 5 轮 3–15：上方空抓 / 附近空抓 / 往前推空抓。物体已在夹下仍空抓。
+- 再现：2026-09-13 ACT-v3 Position 90 次。物体在工作区、不在夹下。会去找（不再是 E03 的 0/90 全找不到），仍有空抓、没碰到、第 6 轮后半上方空抓。成功 13/90。
 
 ### P017 Object OOD 夹爪开合与正常夹取相反
 
@@ -184,4 +192,39 @@ lerobot-train --config_path=D:\SO-ARM101\outputs\train\act_so101_e03\checkpoints
 - 解法：新开目录；`--strategy.target_video_file_size_mb=15`；停用 **Esc**，等到日志出现 `Episode saved` 或 `Final in-progress episode saved`。不要 Ctrl-C。
 - 不要：对着空目录开训。
 - 缓解：2026-09-13 `dagger2` + 15MB 切集 + Esc，**14 ep / 37494 帧**落盘；`Final in-progress episode saved`。
+
+### P019 ACT-v2 夹后伸缩、不放置
+
+- 时间：2026-09-13 11:51 ACT-v2 首条真机
+- 症状：物体在夹爪正下方，能夹取；夹后整臂前后抽，策略自己不放置。60s 到点回原点才松爪，不算成功。
+- 根因（暂定）：v2 只吃 dagger2 14 ep；自主帧含大量找物/失败轨迹；纠正偏找物，干净「夹起→平移→松开」少。BC 会学伸缩搜索。ACT 动作块可能循环同一伸缩段。
+- 不要：为此并行 DP/VLA；不要 resume 进现有 v2；不要编造 Position 次数。
+- 以后：日常用 E03。若再飞轮，开新 job（混 100 ep，或用 E03 再 DAgger），不要只用失败自主帧。
+- 再现：2026-09-13 12:08 IID 改 **0/15**。12:26 Position：找不到、空中空夹、动作差。
+
+### P020 ACT-v3 夹到物体前头再往前推滑落
+
+- 时间：2026-09-13 19:21 ACT-v3 IID 90 次
+- 症状：物体在夹爪正下方。能碰到，多数滑落。夹爪打到物体前头，再往前推，物体滑到夹爪前方，上抬失败。IID **8/90**。
+- 根因（暂定）：100 专家 + dagger3 从零训；dagger3 纠正偏找物/介入，干净夹取中心对准少。BC 学成「往前够」而不是对中再闭爪。
+- 不要：为此并行 DP/VLA；不要用 v3 当下一轮 DAgger 底；不要把 8/90 当成任意位置成功率。
+- 以后：日常夹下用 E03。找物可看 v3。若再飞轮，底策略仍用 E03 补对准，不要只混失败自主帧从零再训 100K。
+- 再现：2026-09-13 Position 仍大量碰到 / 滑到前面；抓了不放 5 次。找物改善后，P020 还在。
+
+### P021 训 Diffusion 缺 lerobot[diffusion]
+
+- 时间：2026-09-13 19:48
+- 症状：`lerobot-train --policy.type=diffusion` 在 `make_policy` 报 `ImportError: 'diffusers' is required`。
+- 根因：本机环境只装过 ACT 依赖，没装 `lerobot[diffusion]`。
+- 解法：`pip install -e .\lerobot[diffusion]`（装上 `diffusers` 0.39）。
+- 以后：W8 开训前先装这一项。不要为此开 VLA。
+
+### P022 倒计时大屏整页刷新会退出全屏
+
+- 时间：2026-09-13 20:21
+- 症状：点画面进全屏后约 2 秒自动退出。
+- 根因：`dp-countdown.html` 用了 `meta refresh`，watcher 还每 2 秒重写整页，浏览器一刷新就退出 Fullscreen API。
+- 解法：页面改成静态，只拉 `train-live.json` / `train-live.js`；本机 `http://127.0.0.1:8765/dp-countdown.html`。关掉旧的 `file://` 标签。
+- 以后：大屏不要整页刷新。不要杀 `lerobot-train`。
+
 

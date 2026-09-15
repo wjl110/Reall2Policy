@@ -2,13 +2,13 @@
 
 课表原文（抄命令）：[`docs/COURSE.md`](../docs/COURSE.md)  
 实验数字：[`experiments/INDEX.md`](../experiments/INDEX.md)  
-更新：2026-09-13 04:45
+更新：2026-09-15 08:34
 
 ## 当前焦点
 
-**W7：ACT-v2 正常在跑**（`080000` 已落）。实时监控已开。
+**W8：DP 100K 已齐。** 下一步 EMA 真机 IID，对照 E03。不要开 VLA。
 
-本周实践 vs 课表：加采完成，训练过 80K，未到 100K。
+本周实践 vs 课表：W8 训练齐，未评测。W7 已齐。未跳周。
 
 ## 总进度
 
@@ -20,9 +20,9 @@
 | W3 ACT | E01/E02/E03 各 100K | **完成** | E03 `100000` loss 0.168 | 进入 W4 rollout |
 | W4 拔 Leader | 真机 rollout + Demo | **完成** | `assets/demo.mp4` 约 105MB | 进库前需压缩 |
 | W5–6 Eval/OOD | 填评测表 | **完成** | Cam 19/90；Pos/Obj 0 | 无 |
-| W7 Flywheel | hard cases + ACT-v2 | **进行中** | v2 `080000` | 未到 100K |
-| W8 ACT vs DP | 同数据对比 | 未开始 | 模板 `results/act_vs_dp.md` | 禁止现在并行 |
-| W9–10 SmolVLA | 语言指令 | 未开始 | — | 禁止现在并行 |
+| W7 Flywheel | hard cases + ACT-v2 | **评测齐** | v3 IID 8/90；Pos 13/90 | 无 |
+| W8 ACT vs DP | 同数据对比 | **进行中** | `dp_so101_v1` **100K @08:34** | 待 EMA rollout |
+| W9–10 SmolVLA | 语言指令 | 未开始 | 课表已改微调 `smolvla_base` + `so101_lang` | 禁止现在并行 |
 | W11 World Model | 预测实验 | 未开始 | — | **不到该周不要做** |
 | W12 作品集 | GitHub + Demo | 进行中 | https://github.com/wjl110/Reall2Policy | README 四格 Demo + 评测聚类 + 作者信息 |
 
@@ -70,8 +70,9 @@
 - 课表：W6 最差条件加采 + ACT-v2
 - 计划：2026-09-12 约定 W5–6 完成后用官方 `--strategy.type=dagger --strategy.record_autonomous=true`（整段保存，纠正打 `intervention`）
 - 约束：新开 `local/rollout_so101_dagger`，不 resume 现有 100 ep；插回 Leader
-- 实际：第一趟 0 ep（P018）。dagger2 **14 ep / 37494 帧**。02:32 开 ACT-v2；20/40/60K 已落；04:40 **`080000`**
-- 差距：训练未到 100K
+- 实际：dagger3 11 ep / 73 纠正。混合集 `so101_v3_mix` 111/98723。13:11 开 ACT-v3；15:41 **100K**。IID **8/90**（1/2/2/1/0/2）。Position **13/90**（0/6/1/0/2/4），物体在工作区、臂换角度。E03 Position 是 0/90。
+- 调研：官方 Hub 集格式能加载，相机是 `up`+`side`，**不混进本机 ACT**。开放权重 `smolvla_base` 留 W9。
+- 差距：飞轮目标已练过。IID 掉了、Pos 涨了。不要开 DP。
 
 ### W12 作品集
 
@@ -79,9 +80,15 @@
 - 实际：2026-09-13 README Demo 四格；同日补评测聚类（`eval_w56.md`）与作者信息
 - 差距：W8–W11 未做；作品集结构未齐
 
-### W8–W11
+### W8 ACT vs DP
 
-W8 起尚未按评测表实践。
+- 课表：同一 100 ep 训 Diffusion，再和 ACT 比，填 `results/act_vs_dp.md`
+- 实际：2026-09-13 19:48 第一次缺 `diffusers`（P021）；19:50 重开。ckpt 20K 03:13 / 40K 10:31 / 60K 17:18 / 80K 01:27 / **100K 08:34:20**。墙钟约 36.7 h。INFO loss 到 14K（0.021），100K loss 无日志。
+- 差距：待 EMA 真机，填 `results/act_vs_dp.md`
+
+### W9–W11
+
+W9 命令已写入课表：微调 `lerobot/smolvla_base`，数据 `local/so101_lang`。语言集未采。现在不开。
 
 ## 偏离 / 拦截
 
@@ -90,6 +97,7 @@ W8 起尚未按评测表实践。
 | 2026-09-10 | 训练读盘期间不可 resume 同一数据集 | 已解除（E01 结束） |
 | 2026-09-10 | W4 rollout 在 W2 补满前做了 | 允许：E01 权重已可用；下一步仍回 W2 补采，不跳去 DP/VLA |
 | 2026-09-11 | 未满 100 ep 就想训 E03 | 拦住：先 +50 再 E03 |
+| 2026-09-13 | 想用 Hub 开放集补本机 ACT | 拦住：能加载但不能混；W9 再用 smolvla_base |
 
 ## 每周节奏（对照用）
 

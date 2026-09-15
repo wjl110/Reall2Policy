@@ -12,8 +12,9 @@
 | W3 ACT | **E01/E02/E03 完成 100K** | E03 loss 0.168 @100K |
 | W4 拔 Leader | **完成** | `assets/demo.mp4` |
 | W5–6 Eval/OOD | **完成** | Cam 19/90；Pos/Obj 0/90 |
-| W7 Flywheel | **进行中** | ACT-v2 训练中，`080000` 已落 |
-| W8–W12 | 未开始 | — |
+| W7 Flywheel | **评测齐** | v3 IID 8/90；Pos **13/90**（E03 Pos 0） |
+| W8 ACT vs DP | **进行中** | DP **100K 已齐**；待真机 |
+| W9–W12 | 未开始 | — |
 
 任务只做一件：`Pick up the object and place it down.`（Random-position Pick & Place）
 
@@ -21,11 +22,14 @@
 
 ## 现在立刻
 
-W7：ACT-v2 **在跑**（`080000` 已落）。实时页 `lab-log/train-live.html`。等 100K。不要录数据、不要 resume dagger2。不要并行 DP/VLA。若进程死了再 resume：
+W8：Diffusion **100K 已齐**（`outputs/train/dp_so101_v1/checkpoints/100000` @08:34）。100K loss 无日志，不编造。日常仍用 E03。不要开 VLA。
+
+先 IID，必须先摆到录制起始姿态。用 **EMA** 权重：
 
 ```bat
-lerobot-train --resume=true --dataset.repo_id=local/rollout_so101_dagger2 --dataset.root=D:\SO-ARM101\data\local\rollout_so101_dagger2 --dataset.video_backend=pyav --policy.type=act --output_dir=outputs/train/act_so101_v2 --job_name=act_so101_v2 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000 --accelerator.mixed_precision=bf16
+lerobot-rollout --strategy.type=base --policy.path=outputs/train/dp_so101_v1/checkpoints/100000/pretrained_model_ema --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --task="Pick up the object and place it down." --duration=60 --display_data=true
 ```
+
 
 ---
 
@@ -153,8 +157,14 @@ lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM1
 
 ## Week 8：ACT vs Diffusion（同一 Dataset）
 
+本机先装依赖（只需一次）：
+
 ```bat
-lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=diffusion --ema.enable=true --output_dir=outputs/train/dp_so101_v1 --job_name=dp_so101_v1 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000
+pip install -e .\lerobot[diffusion]
+```
+
+```bat
+lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=diffusion --ema.enable=true --output_dir=outputs/train/dp_so101_v1 --job_name=dp_so101_v1 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=8 --steps=100000 --accelerator.mixed_precision=bf16
 ```
 
 ```bat
@@ -167,11 +177,13 @@ lerobot-rollout --strategy.type=base --policy.path=outputs/train/dp_so101_v1/che
 
 ## Week 9–10：SmolVLA
 
+官方微调 `lerobot/smolvla_base`，不要从零。数据必须是下面的语言指令集，不要用 100 ep 抓放集、不要混 Hub 集。W7/W8 未完、GPU 被占时不要跑。
+
 ```bat
 pip install -e ".\lerobot[smolvla]"
 ```
 
-语言指令录制（每条指令各一批，`single_task` 换成对应英文）：
+新开 `local/so101_lang`。每条指令一批，只改 `single_task`。第一批不要 `--resume`；后两批加 `--resume=true`。
 
 ```text
 Pick up the red block.
@@ -179,9 +191,19 @@ Put the block into the box.
 Move the blue object to the left.
 ```
 
+第一批（约 20 条）：
+
 ```bat
-lerobot-train --dataset.repo_id=local/so101_pick_place --dataset.root=D:\SO-ARM101\data\local\so101_pick_place_20260910_011033 --dataset.video_backend=pyav --policy.type=smolvla --output_dir=outputs/train/smolvla_so101_v1 --job_name=smolvla_so101_v1 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=4 --steps=20000
+lerobot-record --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --teleop.type=so101_leader --teleop.port=COM3 --teleop.id=so101_leader --dataset.repo_id=local/so101_lang --dataset.root=D:\SO-ARM101\data\local\so101_lang --dataset.num_episodes=20 --dataset.episode_time_s=20 --dataset.reset_time_s=8 --dataset.single_task="Pick up the red block." --dataset.push_to_hub=false --display_data=true
 ```
+
+后两批：同上，加 `--resume=true`，`single_task` 换成另外两句。
+
+```bat
+lerobot-train --policy.path=lerobot/smolvla_base --dataset.repo_id=local/so101_lang --dataset.root=D:\SO-ARM101\data\local\so101_lang --dataset.video_backend=pyav --output_dir=outputs/train/smolvla_so101_v1 --job_name=smolvla_so101_v1 --policy.device=cuda --wandb.enable=false --policy.push_to_hub=false --batch_size=4 --steps=20000
+```
+
+若报相机数不够（base 常见双机位，本机只有 `front`），在训练命令末尾加 `--policy.empty_cameras=1`。
 
 ```bat
 lerobot-rollout --strategy.type=base --policy.path=outputs/train/smolvla_so101_v1/checkpoints/020000/pretrained_model --robot.type=so101_follower --robot.port=COM4 --robot.id=so101_follower --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}}" --task="Pick up the red block." --duration=60 --display_data=true

@@ -1,7 +1,7 @@
 {
-  "updated": "2026-09-13T04:45:00+08:00",
-  "source": "lab-log + docs/COURSE.md + README eval cluster + author",
-  "course_overall_pct": 66,
+  "updated": "2026-09-15T08:34:00+08:00",
+  "source": "lab-log + docs/COURSE.md + W8 DP 100K",
+  "course_overall_pct": 73,
   "weeks": [
     {"id": "W0", "name": "环境", "progress_pct": 100, "benefit_plan": 2, "benefit_realized": 2},
     {"id": "W1", "name": "遥操", "progress_pct": 100, "benefit_plan": 4, "benefit_realized": 4},
@@ -9,8 +9,8 @@
     {"id": "W3", "name": "ACT", "progress_pct": 100, "benefit_plan": 7, "benefit_realized": 7},
     {"id": "W4", "name": "拔Leader", "progress_pct": 100, "benefit_plan": 9, "benefit_realized": 9},
     {"id": "W5-6", "name": "Eval/OOD", "progress_pct": 100, "benefit_plan": 8, "benefit_realized": 8},
-    {"id": "W7", "name": "Flywheel", "progress_pct": 85, "benefit_plan": 8, "benefit_realized": 6},
-    {"id": "W8", "name": "ACT vs DP", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
+    {"id": "W7", "name": "Flywheel", "progress_pct": 100, "benefit_plan": 8, "benefit_realized": 8},
+    {"id": "W8", "name": "ACT vs DP", "progress_pct": 80, "benefit_plan": 9, "benefit_realized": 0},
     {"id": "W9-10", "name": "SmolVLA", "progress_pct": 0, "benefit_plan": 9, "benefit_realized": 0},
     {"id": "W11", "name": "World Model", "progress_pct": 0, "benefit_plan": 6, "benefit_realized": 0},
     {"id": "W12", "name": "作品集", "progress_pct": 25, "benefit_plan": 10, "benefit_realized": 4}
@@ -20,7 +20,7 @@
     "demonstrations_target": 100,
     "headline_policy": "ACT E03",
     "headline_step": "100K",
-    "last_milestone": "2026-09-13 README 上评测聚类与作者信息",
+    "last_milestone": "2026-09-15 Diffusion 100K 落盘，待真机对照",
     "footnote": "进度由 `lab-log/metrics.json` 生成；实验数字以 `experiments/INDEX.md` 与 `results/` 为准，未测完不写成功率。",
     "week_rows": [
       {"label": "W0 环境 / W1 遥操", "status": "完成"},
@@ -28,8 +28,9 @@
       {"label": "W3 ACT", "status": "E01/E02/E03 均完成 100K"},
       {"label": "W4 拔 Leader", "status": "完成 demo.mp4"},
       {"label": "W5–6 Eval/OOD", "status": "完成；Cam 19/90；Pos/Obj 0"},
-      {"label": "W7 Flywheel", "status": "ACT-v2 训练中，80K 已落"},
-      {"label": "W8–W12", "status": "未开始"}
+      {"label": "W7 Flywheel", "status": "v3 IID 8/90；Pos 13/90"},
+      {"label": "W8 ACT vs DP", "status": "Diffusion 100K 已齐，待 rollout"},
+      {"label": "W9–W12", "status": "未开始"}
     ]
   },
   "learning_curve": {
@@ -68,27 +69,48 @@
     "job": "act_so101_v2",
     "policy": "act",
     "mixed_precision": "bf16",
-    "caption": "ACT-v2 02:32 开训。20/40/60/80K 已落。这些点的 loss 被进度条覆盖不编造。Source: ot_train.py + watch-train.py。",
-    "latest_step": 80000,
+    "caption": "ACT-v2 02:32 开训，05:09 100K 落盘。仅早期 200–800 有 loss；20K 后被进度条覆盖，不编造。Source: ot_train.py + 磁盘 ckpt。",
+    "latest_step": 100000,
     "steps_k": [0.2, 0.4, 0.6, 0.8],
     "loss": [6.967, 3.112, 2.688, 2.413],
     "l1_loss": [0.705, 0.628, 0.611, 0.589],
     "kld_loss": [0.626, 0.248, 0.208, 0.182],
     "grdn": [156.532, 85.572, 75.676, 69.688]
   },
+  "learning_curve_v3": {
+    "job": "act_so101_v3",
+    "policy": "act",
+    "mixed_precision": "bf16",
+    "caption": "ACT-v3 13:11 开训，15:41 100K 落盘。1K 后 loss 被进度条覆盖，不编造中段/100K loss。Source: ot_train.py + 磁盘 ckpt。",
+    "latest_step": 100000,
+    "steps_k": [0.2, 0.4, 0.6, 0.8, 1.0],
+    "loss": [6.994, 3.094, 2.670, 2.394, 2.198],
+    "l1_loss": [0.674, 0.591, 0.563, 0.552, 0.545],
+    "kld_loss": [0.632, 0.250, 0.211, 0.184, 0.165],
+    "grdn": [155.641, 85.395, 74.883, 69.097, 65.353]
+  },
+  "learning_curve_dp": {
+    "job": "dp_so101_v1",
+    "policy": "diffusion",
+    "mixed_precision": "bf16",
+    "caption": "W8 DP 19:50 开训，08:34 100K 落盘。INFO loss 到 14K（0.021）；之后终端 capture 停住，不编造中段/100K loss。Source: ot_train.py INFO + checkpoints。",
+    "latest_step": 100000,
+    "steps_k": [0.2, 0.4, 0.6, 0.8, 1, 2, 4, 6, 8, 10, 12, 14],
+    "loss": [0.564, 0.112, 0.083, 0.053, 0.040, 0.034, 0.027, 0.026, 0.025, 0.021, 0.022, 0.021]
+  },
   "flywheel": {
-    "round": 3,
-    "episodes_now": 100,
-    "episodes_target": 100,
-    "hard_cases": 61,
-    "eval_trials": 450,
+    "round": 4,
+    "episodes_now": 111,
+    "episodes_target": 111,
+    "hard_cases": 73,
+    "eval_trials": 630,
     "blocked_by": "",
     "nodes": [
       {"id": "collect", "label": "采集 100/100", "status": "done"},
-      {"id": "train", "label": "训练 ACT-v2", "status": "in_progress"},
-      {"id": "eval", "label": "真机评估 E03", "status": "done"},
-      {"id": "fail", "label": "失败归类 Position", "status": "done"},
-      {"id": "recapture", "label": "加采 dagger2 14ep", "status": "done"}
+      {"id": "train", "label": "训练 ACT-v3 100K", "status": "done"},
+      {"id": "eval", "label": "复测 v3 IID 8 Pos 13", "status": "done"},
+      {"id": "fail", "label": "失败归类 找物后前滑", "status": "done"},
+      {"id": "recapture", "label": "加采 dagger3 11ep", "status": "done"}
     ]
   }
 }

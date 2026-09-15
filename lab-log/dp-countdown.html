@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>W8 DP 倒计时</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: #0c0d10;
+      color: #e8eaed;
+      font-family: "Segoe UI", "Noto Sans SC", sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4vh 6vw;
+      box-sizing: border-box;
+      user-select: none;
+      cursor: pointer;
+    }
+    .kicker { letter-spacing: 0.18em; color: #8b919a; font-size: clamp(14px, 1.6vw, 22px); }
+    h1 { margin: 8px 0 0; font-size: clamp(22px, 3vw, 40px); font-weight: 600; }
+    .clock {
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(64px, 14vw, 180px);
+      line-height: 0.95;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      margin: 4vh 0 1vh;
+    }
+    .finish { font-size: clamp(20px, 2.6vw, 36px); color: #c5cad3; }
+    .bar { height: 14px; background: #23262c; margin: 4vh 0 12px; }
+    .fill { height: 14px; width: 0; background: #6ea8fe; transition: width 0.4s linear; }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 4vh;
+    }
+    .label { color: #8b919a; font-size: 14px; }
+    .value { font-size: clamp(18px, 2vw, 28px); margin-top: 6px; }
+    .ok { color: #7dcea0; }
+    .warn { color: #e8b86d; }
+    .hint { margin-top: 4vh; color: #6b717a; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="kicker" id="kicker">W8 · DIFFUSION POLICY</div>
+  <h1>距离 100K 还剩</h1>
+  <div class="clock" id="clock">—</div>
+  <div class="finish" id="finish">读取训练进度…</div>
+  <div class="bar"><div class="fill" id="fill"></div></div>
+  <div id="progress">—</div>
+  <div class="row">
+    <div><div class="label">状态</div><div class="value ok" id="status">连接中</div></div>
+    <div><div class="label">当前 loss</div><div class="value" id="loss">—</div></div>
+    <div><div class="label">速度</div><div class="value" id="pace">—</div></div>
+    <div><div class="label">下一档 ckpt</div><div class="value" id="ckptNext">—</div></div>
+    <div><div class="label">GPU</div><div class="value" id="gpu">—</div></div>
+    <div><div class="label">已落盘</div><div class="value" id="ckptDone">—</div></div>
+    <div><div class="label">更新</div><div class="value" id="updated">—</div></div>
+    <div><div class="label">刷新</div><div class="value">数字更新 · 不整页刷新</div></div>
+  </div>
+  <div class="hint" id="hint">点画面进入全屏，Esc 退出。不要关训练窗口。</div>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let live = null;
+    let fetchedAt = 0;
+
+    function fmtHms(seconds) {
+      if (seconds == null || Number.isNaN(seconds) || seconds < 0) return "—";
+      const total = Math.max(0, Math.round(seconds));
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    function apply(data) {
+      live = data;
+      fetchedAt = Date.now();
+      $("kicker").textContent = `W8 · DIFFUSION POLICY · ${data.job || ""}`;
+      $("finish").textContent = data.finish_label ? `预计完成 ${data.finish_label}` : "预计完成 —";
+      $("fill").style.width = `${data.progress_pct || 0}%`;
+      $("progress").textContent = `${data.step ?? "—"} / ${data.target_step ?? 100000} · ${data.progress_pct ?? 0}%`;
+      const status = data.healthy ? "训练中" : (data.alive ? "进程在" : "进程已停");
+      $("status").textContent = status;
+      $("status").className = "value " + (data.healthy ? "ok" : "warn");
+      $("loss").textContent = data.loss == null ? "—" : Number(data.loss).toFixed(3);
+      $("pace").textContent = data.sec_per_step ? `${data.sec_per_step} 秒/步` : "—";
+      $("ckptNext").textContent = data.next_ckpt ? `${data.next_ckpt} / ${data.next_ckpt_hms}` : "已到 100K";
+      let gpu = "—";
+      if (data.gpu_util_pct != null) {
+        gpu = `${data.gpu_util_pct}% · ${data.vram_used_mb} MiB`;
+        if (data.gpu_watts != null) gpu += ` · ${Math.round(data.gpu_watts)} W`;
+      }
+      $("gpu").textContent = gpu;
+      $("ckptDone").textContent = (data.ckpt_steps && data.ckpt_steps.length) ? data.ckpt_steps.join(" / ") : "尚未落盘";
+      $("updated").textContent = data.updated || "—";
+      $("hint").textContent = "点画面进入全屏，Esc 退出。不要关训练窗口。" + (data.note || "");
+      tickClock();
+    }
+
+    function tickClock() {
+      if (!live || live.eta_s == null) {
+        $("clock").textContent = live && live.eta_hms ? live.eta_hms : "—";
+        return;
+      }
+      const remain = live.eta_s - (Date.now() - fetchedAt) / 1000;
+      $("clock").textContent = fmtHms(remain);
+    }
+
+    function loadScript() {
+      const old = document.getElementById("live-js");
+      if (old) old.remove();
+      const s = document.createElement("script");
+      s.id = "live-js";
+      s.src = "train-live.js?t=" + Date.now();
+      s.onload = () => {
+        if (window.TRAIN_LIVE) apply(window.TRAIN_LIVE);
+      };
+      document.head.appendChild(s);
+    }
+
+    async function poll() {
+      try {
+        const r = await fetch("train-live.json?t=" + Date.now(), { cache: "no-store" });
+        if (r.ok) {
+          apply(await r.json());
+          return;
+        }
+      } catch (_) {}
+      loadScript();
+    }
+
+    function isFullscreen() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement);
+    }
+
+    function enterFullscreen() {
+      if (isFullscreen()) return;
+      const el = document.documentElement;
+      const req = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (req) req.call(el).catch(() => {});
+    }
+
+    document.body.addEventListener("click", enterFullscreen);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "f" || e.key === "F") enterFullscreen();
+    });
+
+    poll();
+    setInterval(poll, 2000);
+    setInterval(tickClock, 250);
+  </script>
+</body>
+</html>

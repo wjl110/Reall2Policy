@@ -91,8 +91,9 @@ W7 最差条件是 **找物 / Position**，不是光照或相机。DAgger 优先
 | W3 ACT | E01/E02/E03 均完成 100K |
 | W4 拔 Leader | 完成 demo.mp4 |
 | W5–6 Eval/OOD | 完成；Cam 19/90；Pos/Obj 0 |
-| W7 Flywheel | ACT-v2 训练中，80K 已落 |
-| W8–W12 | 未开始 |
+| W7 Flywheel | v3 IID 8/90；Pos 13/90 |
+| W8 ACT vs DP | Diffusion 100K 已齐，待 rollout |
+| W9–W12 | 未开始 |
 <!-- readme:progress:end -->
 
 ## 本机启动

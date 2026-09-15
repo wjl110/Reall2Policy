@@ -1,6 +1,6 @@
 # 实验台账总览
 
-最后更新：2026-09-13 04:43
+最后更新：2026-09-15 08:34
 
 
 | 区    | 文件                                                               |
@@ -38,7 +38,16 @@
 | 2026-09-12 | E03 Camera Shift       | 部分 | 19/90；夹下预张爪；换侧斜前 | [experiments/2026-09-12_eval-camera-shift.md](experiments/2026-09-12_eval-camera-shift.md) |
 | 2026-09-12 | W7 DAgger 第一趟       | 失败 | 18min / 7 次纠正 / 0 ep（P018） | [experiments/2026-09-12_dagger-collect.md](experiments/2026-09-12_dagger-collect.md)       |
 | 2026-09-13 | W7 DAgger dagger2      | 成功 | 14 ep / 37494 帧 / 61 纠正 | [experiments/2026-09-13_dagger2-collect.md](experiments/2026-09-13_dagger2-collect.md)     |
-| 2026-09-13 | W7 ACT-v2 训练         | 进行中 | `080000`；实时监控已开 | [experiments/2026-09-13_act-train-v2.md](experiments/2026-09-13_act-train-v2.md)           |
+| 2026-09-13 | W7 ACT-v2 训练         | 成功 | `100000` @05:09；100K loss 无日志 | [experiments/2026-09-13_act-train-v2.md](experiments/2026-09-13_act-train-v2.md)           |
+| 2026-09-13 | W7 ACT-v2 复测         | 进行中 | IID 0/15；Pos 0/15 | [experiments/2026-09-13_eval-act-v2.md](experiments/2026-09-13_eval-act-v2.md)             |
+| 2026-09-13 | W7 飞轮 v3 方案         | 已确认 | 先采 dagger3 | [experiments/2026-09-13_flywheel-v3-plan.md](experiments/2026-09-13_flywheel-v3-plan.md)   |
+| 2026-09-13 | W7 DAgger dagger3      | 成功 | 11 ep / 73 纠正 | [experiments/2026-09-13_dagger3-collect.md](experiments/2026-09-13_dagger3-collect.md)     |
+| 2026-09-13 | W7 ACT-v3 训练         | 成功 | 111 ep 混合集；**100000 @15:41** | [experiments/2026-09-13_act-train-v3.md](experiments/2026-09-13_act-train-v3.md)           |
+| 2026-09-13 | W7 ACT-v3 复测         | 成功 | IID 8/90；Pos **13/90** | [experiments/2026-09-13_eval-act-v3.md](experiments/2026-09-13_eval-act-v3.md)             |
+| 2026-09-13 | W8 Diffusion 训练      | 成功 | 同一 100 ep；**100000 @08:34** | [experiments/2026-09-13_dp-train.md](experiments/2026-09-13_dp-train.md)                   |
+| 2026-09-13 | Hub 开放数据适配       | 结论   | 能加载；不能混本机 ACT；W9 再用 smolvla_base | [experiments/2026-09-13_hub-dataset-adapt.md](experiments/2026-09-13_hub-dataset-adapt.md) |
+| 2026-09-13 | SmolVLA 路线           | 结论   | W9 微调 base，不走从零+20K；现在不开 | [experiments/2026-09-13_smolvla-route.md](experiments/2026-09-13_smolvla-route.md) |
+| 2026-09-13 | 官方提效对照           | 结论   | 慢在重复满训；Hub ACT 不可复用；W9 微调 + 下轮接着训 | [experiments/2026-09-13_hf-efficiency.md](experiments/2026-09-13_hf-efficiency.md) |
 | 2026-09-10 | 建立实验台账 Skill         | 成功   | `lab-log/` + `.cursor/skills/reall2policy-lab-log` | [experiments/2026-09-10_lab-log-skill.md](experiments/2026-09-10_lab-log-skill.md)       |
 | 2026-09-10 | 12 周课表落地             | 成功   | `docs/COURSE.md` + configs/experiments/results     | [experiments/2026-09-10_course-setup.md](experiments/2026-09-10_course-setup.md)         |
 
@@ -51,7 +60,9 @@
 | 目录                                   | episodes | frames   | 用途                 |
 | ------------------------------------ | -------- | -------- | ------------------ |
 | **so101_pick_place_20260910_011033** | **100**   | **65100** | **E03 数据已齐** |
-| **rollout_so101_dagger2** | **14** | **37494** | **W7 DAgger（含 intervention）** |
+| **rollout_so101_dagger2** | **14** | **37494** | **W7 DAgger v2（含 intervention）** |
+| **rollout_so101_dagger3** | **11** | **33623** | **W7 DAgger v3（73 纠正）** |
+| **so101_v3_mix** | **111** | **98723** | **100 专家 + dagger3（已去 intervention）** |
 
 2026-09-10 03:19 用户删除试录、空壳、中断目录（`so101_first_test_*`、`so101_pick_place` 空壳、`..._010322`～`..._010721`）。
 
@@ -70,4 +81,7 @@
 - P011 录制 Esc/`q` 会整段退出（含 Rerun 窗口）
 - P012 补采 mp4 未落盘就开训，DataLoader 找不到 file-002
 - P013 抓放成功后回折叠，第二轮卡死抖动
+- P019 ACT-v2 夹后伸缩、不放置
+- P020 ACT-v3 夹前再往前推
+- P021 训 Diffusion 缺 `lerobot[diffusion]`
 
